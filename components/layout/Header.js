@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Link from "next/link";
 import styled from "@emotion/styled";
@@ -7,6 +7,7 @@ import { css } from "@emotion/react";
 import { Search } from "../ui/Search";
 import { Navigation } from "./Navigation";
 import { Button } from "./../ui/Button";
+import { FirebaseContext } from "../../firebase/Index";
 
 const ContainerHeader = styled.div`
   max-width: 1200px;
@@ -36,7 +37,8 @@ const Logo = styled.p`
 `;
 
 export const Header = () => {
-  const user = true;
+  const { user, FirebaseInit } = useContext(FirebaseContext);
+
   return (
     <header
       css={css`
@@ -57,11 +59,10 @@ export const Header = () => {
           <Navigation />
         </FlexDiv>
 
-        <FlexDiv>
-          {user ? (
-            <>
-              {/*
-               <p
+        {user ? (
+          <>
+            <FlexDiv>
+              <p
                 css={css`
                   margin-right: 2rem;
                   color: var(--gray);
@@ -69,32 +70,35 @@ export const Header = () => {
                   font-weight: 700;
                 `}
               >
-                Ing. Elver Galarga
+                <i className="fas fa-user-circle"></i> {user.displayName}
               </p>
-              */}
-              <Button bgColor="true">Cerrar Sesión</Button>
+            </FlexDiv>
 
-              <Link href="/Register" passHref={true}>
+            <FlexDiv>
+              <Button bgColor="true" onClick={() => FirebaseInit.logout()}>
+                Cerrar Sesión
+              </Button>
+              <Link href="/RegisterAdmin" passHref={true}>
                 <Button bgColor="true">
                   <i className="fas fa-users-cog"></i>
                 </Button>
               </Link>
-            </>
-          ) : (
-            <>
-              <Link href="/Login" passHref={true}>
-                <Button bgColor="true">Acceder </Button>
-              </Link>
-              <Button
-                href="https://www.escinf.una.ac.cr/index.php/quienes-somos/contactenos"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Contacto
-              </Button>
-            </>
-          )}
-        </FlexDiv>
+            </FlexDiv>
+          </>
+        ) : (
+          <FlexDiv>
+            <Link href="/Login" passHref={true}>
+              <Button bgColor="true">Acceder </Button>
+            </Link>
+            <Button
+              href="https://www.escinf.una.ac.cr/index.php/quienes-somos/contactenos"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Contacto
+            </Button>
+          </FlexDiv>
+        )}
       </ContainerHeader>
     </header>
   );

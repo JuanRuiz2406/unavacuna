@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { css } from "@emotion/react";
 import { Layout } from "../components/layout/Layout";
-import { Form, Field, InputSubmit, Error } from "./../components/ui/Form";
-import { UseValidation } from "./../hooks/UseValidation";
-import registerValidate from "./validations/RegisterValidate";
+import { Form, Field, InputSubmit, Error } from "../components/ui/Form";
+import { UseValidation } from "../hooks/UseValidation";
+import FirebaseInit from "../firebase/Index";
+import registerValidate from "../validations/RegisterValidate";
+import Router from "next/router";
 
 const initialState = {
   name: "",
@@ -12,14 +14,25 @@ const initialState = {
   password: "",
 };
 
-export default function Register() {
+export default function RegisterAdmin() {
+  const [registerError, setRegisterError] = useState(null);
+
   const { values, errors, handleChange, handleSubmit, handleBlur } =
     UseValidation(initialState, registerValidate, register);
 
   const { name, email, password } = values;
 
-  function register() {
-    console.log("Creando cuenta");
+  async function register() {
+    try {
+      await FirebaseInit.adminRegister(name, email, password);
+      Router.push("/");
+    } catch (error) {
+      console.log(error);
+
+      setRegisterError(
+        "El correo ya esta siendo utilizado por otro/a administrador"
+      );
+    }
   }
 
   return (
@@ -32,7 +45,7 @@ export default function Register() {
               margin-top: 5rem;
             `}
           >
-            Registrar Nuevo Administrador
+            Registrar Administrador
           </h1>
           <Form onSubmit={handleSubmit} noValidate>
             <Field>
@@ -73,6 +86,7 @@ export default function Register() {
             </Field>
             {errors.password && <Error>{errors.password}</Error>}
 
+            {registerError && <Error>{registerError}</Error>}
             <InputSubmit type="submit" value="Registrar" />
           </Form>
         </>

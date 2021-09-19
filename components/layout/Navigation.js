@@ -3,7 +3,7 @@ import Link from "next/link";
 import styled from "@emotion/styled";
 
 const Nav = styled.nav`
-margin: 1.5rem;
+  margin: 1.5rem;
 
   a {
     font-size: 1.8rem;
