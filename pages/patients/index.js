@@ -6,7 +6,7 @@ export default function Patients() {
     <div>
       <Layout>
         <h1>Estadisticas de Pacientes</h1>
-        <Link href="/Patients/Register">Agregar</Link>
+        <Link href="/patients/register">Agregar</Link>
       </Layout>
     </div>
   );
