@@ -78,7 +78,7 @@ export const Header = () => {
               <Button bgColor="true" onClick={() => FirebaseInit.logout()}>
                 Cerrar Sesión
               </Button>
-              <Link href="/RegisterAdmin" passHref={true}>
+              <Link href="/registerAdmin" passHref={true}>
                 <Button bgColor="true">
                   <i className="fas fa-users-cog"></i>
                 </Button>
