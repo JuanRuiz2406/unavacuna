@@ -49,7 +49,7 @@ export const Header = () => {
       <ContainerHeader>
         <FlexDiv>
           <Link href="/" passHref={true}>
-            <Logo>UNA vacuna</Logo>
+            <Logo>UNA Vacuna</Logo>
           </Link>
         </FlexDiv>
 
