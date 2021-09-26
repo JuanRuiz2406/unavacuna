@@ -6,7 +6,7 @@ import { Form, Field, InputSubmit, Error } from "../../components/ui/Form";
 import { UseValidation } from "../../hooks/UseValidation";
 // import FirebaseInit from "../../firebase/Index";
 import registerPatient from "../../validations/RegisterPatient";
-//import Router from "next/router";
+import Router from "next/router";
 
 const initialState = {
   idCard: "",

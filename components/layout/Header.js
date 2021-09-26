@@ -70,7 +70,7 @@ export const Header = () => {
                   font-weight: 700;
                 `}
               >
-                <i className="fas fa-user-circle"></i> {user.displayName}
+                <i className="fas fa-user"></i> {user.displayName}
               </p>
             </FlexDiv>
 
