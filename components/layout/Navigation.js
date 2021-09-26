@@ -26,7 +26,7 @@ export const Navigation = () => {
     <Nav>
       <Link href="/">Inicio</Link>
       <Link href="/patients">Pacientes</Link>
-      <Link href="/vaccine">Vacunas</Link>
+      <Link href="/vaccines">Vacunas</Link>
       <a
         href="https://www.ccss.sa.cr/web/coronavirus/"
         target="_blank"
