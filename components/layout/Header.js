@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-
+import Image from 'next/image';
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
@@ -49,7 +49,7 @@ export const Header = () => {
       <ContainerHeader>
         <FlexDiv>
           <Link href="/" passHref={true}>
-            <Logo>UNA vacuna</Logo>
+            <img src="/static/images/logo.png" width={150} height={90}/>
           </Link>
         </FlexDiv>
 
