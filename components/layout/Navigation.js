@@ -20,11 +20,13 @@ const Nav = styled.nav`
     }
   }
 `;
+
 export const Navigation = () => {
   return (
     <Nav>
       <Link href="/">Inicio</Link>
-      <Link href="/Statistic">Estadísticas</Link>
+      <Link href="/patients">Pacientes</Link>
+      <Link href="/vaccine">Vacunas</Link>
       <a
         href="https://www.ccss.sa.cr/web/coronavirus/"
         target="_blank"
