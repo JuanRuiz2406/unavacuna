@@ -5,6 +5,8 @@ import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { Layout } from "./../../components/layout/Layout";
 import { FirebaseContext } from "./../../firebase/Index";
 
+import Link from "next/link";
+
 export default function VaccineList() {
   const [vaccines, setVaccines] = useState([]);
 
@@ -29,6 +31,7 @@ export default function VaccineList() {
   return (
     <Layout>
       <h1>Lista de vacunas</h1>
+      <Link href="/vaccines/register">Agregar</Link>
     </Layout>
   );
 }
