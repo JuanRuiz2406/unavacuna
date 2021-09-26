@@ -70,7 +70,7 @@ export const Header = () => {
                   font-weight: 700;
                 `}
               >
-                <i className="fas fa-user-circle"></i> {user.displayName}
+                <i className="fas fa-user"></i> {user.displayName}
               </p>
             </FlexDiv>
 
@@ -78,7 +78,7 @@ export const Header = () => {
               <Button bgColor="true" onClick={() => FirebaseInit.logout()}>
                 Cerrar Sesión
               </Button>
-              <Link href="/RegisterAdmin" passHref={true}>
+              <Link href="/registerAdmin" passHref={true}>
                 <Button bgColor="true">
                   <i className="fas fa-users-cog"></i>
                 </Button>
