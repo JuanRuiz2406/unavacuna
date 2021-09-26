@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from "firebase/app";
-//import { getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -17,6 +18,8 @@ class Firebase {
       app = initializeApp(FirebaseConfig);
     }
     this.auth = getAuth(app);
+    this.db = getFirestore(app);
+    this.storage = getStorage(app);
   }
 
   async adminRegister(name, email, password) {
