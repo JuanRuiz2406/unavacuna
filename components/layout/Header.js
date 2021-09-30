@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Image from 'next/image';
+import Image from "next/image";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
@@ -8,6 +8,8 @@ import { Search } from "../ui/Search";
 import { Navigation } from "./Navigation";
 import { Button } from "./../ui/Button";
 import { FirebaseContext } from "../../firebase/Index";
+
+import Logo from "../../public/logo.png";
 
 const ContainerHeader = styled.div`
   max-width: 1200px;
@@ -27,15 +29,6 @@ const FlexDiv = styled.div`
   justify-content: center;
 `;
 
-const Logo = styled.p`
-  color: var(--red);
-  font-size: 4rem;
-  line-height: 0;
-  font-weight: 700;
-  font-family:font-family: "Roboto Slab", serif;
-  margin-right: 2rem;
-`;
-
 export const Header = () => {
   const { user, FirebaseInit } = useContext(FirebaseContext);
 
@@ -48,9 +41,7 @@ export const Header = () => {
     >
       <ContainerHeader>
         <FlexDiv>
-          <Link href="/" passHref={true}>
-            <img src="/static/images/logo.png" width={150} height={90}/>
-          </Link>
+          <Image src={Logo} width={150} height={90} />
         </FlexDiv>
 
         <FlexDiv>{user && <Search />}</FlexDiv>
