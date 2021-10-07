@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { css } from "@emotion/react";
 import { Layout } from "../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../components/ui/Form";
 import { UseValidation } from "../hooks/UseValidation";
-import FirebaseInit from "../firebase/Index";
 import registerValidate from "../validations/RegisterValidate";
 import Router from "next/router";
+import { FirebaseContext, FirebaseInit } from "../firebase/Index";
+import Login from "./Login";
 
 const initialState = {
   name: "",
@@ -16,6 +17,7 @@ const initialState = {
 
 export default function RegisterAdmin() {
   const [registerError, setRegisterError] = useState(null);
+  const { user, FirebaseInit } = useContext(FirebaseContext);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
     UseValidation(initialState, registerValidate, register);
@@ -34,8 +36,10 @@ export default function RegisterAdmin() {
       );
     }
   }
-
-  return (
+//Validación de Register Admin
+  return !user ? (
+    <Login />
+  ) : (
     <div>
       <Layout>
         <>
