@@ -81,6 +81,7 @@ export default function RegisterAdmin() {
         vaccinationPlace,
         dose,
         vaccine,
+        registerDate: Date.now(),
       };
 
       if (docSnap.exists()) {
