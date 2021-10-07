@@ -1,13 +1,19 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext, useEffect } from "react";
+import {
+  collection,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+} from "firebase/firestore";
 import { css } from "@emotion/react";
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../components/ui/Form";
 import { UseValidation } from "../../hooks/UseValidation";
-// import FirebaseInit from "../../firebase/Index";
+import { FirebaseContext } from "../../firebase/Index";
 import registerPatient from "../../validations/RegisterPatient";
-import Router from "next/router";
-
+import { useRouter } from "next/router";
+import Login from "../Login";
 const initialState = {
   idCard: "",
   name: "",
@@ -21,7 +27,7 @@ const initialState = {
 
 export default function RegisterAdmin() {
   const [registerError, setRegisterError] = useState(null);
-
+  const [vaccines, setVaccines] = useState([]);
   const { values, errors, handleChange, handleSubmit, handleBlur } =
     UseValidation(initialState, registerPatient, patientRegister);
 
@@ -36,9 +42,37 @@ export default function RegisterAdmin() {
     vaccine,
   } = values;
 
+  const router = useRouter();
+  const { user, FirebaseInit } = useContext(FirebaseContext);
+
+  const patientsRef = collection(FirebaseInit.db, "patients");
+
+  useEffect(() => {
+    getVaccines();
+  }, [vaccines]);
+
+  const getVaccines = async () => {
+    const getVaccinesFromFirebase = [];
+
+    const querySnapshot = await getDocs(
+      collection(FirebaseInit.db, "vaccines")
+    );
+
+    querySnapshot.forEach((doc) => {
+      getVaccinesFromFirebase.push({ ...doc.data(), key: doc.id });
+    });
+    setVaccines(getVaccinesFromFirebase);
+  };
+
   async function patientRegister() {
     try {
-      await FirebaseInit.patientRegister(
+      if (!user) {
+        return router.push("/Login");
+      }
+      const docRef = doc(FirebaseInit.db, "patients", idCard);
+      const docSnap = await getDoc(docRef);
+
+      const patient = {
         idCard,
         name,
         lastLame,
@@ -46,17 +80,25 @@ export default function RegisterAdmin() {
         address,
         vaccinationPlace,
         dose,
-        vaccine
-      );
-      Router.push("/patients");
+        vaccine,
+      };
+
+      if (docSnap.exists()) {
+        setRegisterError("Paciente ya existe en la base de datos");
+      } else {
+        await setDoc(doc(patientsRef, idCard), patient);
+        return router.push("/patients");
+      }
     } catch (error) {
       console.log(error);
 
-      setRegisterError("Este paciente ya existe");
+      setRegisterError(error.message);
     }
   }
 
-  return (
+  return !user ? (
+    <Login />
+  ) : (
     <div>
       <Layout>
         <>
@@ -151,25 +193,35 @@ export default function RegisterAdmin() {
 
             <Field>
               <label htmlFor="dose">Dosis</label>
-              <select id="dose" name="dose">
-                <option value="Dosis 1">Dosis 1</option>
-                <option value="Dosis 2">Dosis 2</option>
-                <option value="Dosis 3">Dosis 3</option>
+              <select
+                id="dose"
+                name="dose"
+                value={dose}
+                onChange={handleChange}
+              >
+                <option value="Dosis 1">Dosis 1</option>;
+                <option value="Dosis 2">Dosis 2</option>;
               </select>
             </Field>
             {errors.dose && <Error>{errors.dose}</Error>}
 
             <Field>
-              <label htmlFor="vaccine">*Relación* Vacuna</label>
-              <select id="vaccine" name="vaccine">
-                <option value="Vac 1">Vac 1</option>
-                <option value="Vac 2">Vac 2</option>
+              <label htmlFor="vaccine">Vacuna</label>
+              <select
+                id="vaccine"
+                name="vaccine"
+                value={vaccine}
+                onChange={handleChange}
+              >
+                {vaccines.map((item, i) => {
+                  return <option value={item.name}>{item.name}</option>;
+                })}
               </select>
             </Field>
             {errors.vaccine && <Error>{errors.vaccine}</Error>}
 
             {registerError && <Error>{registerError}</Error>}
-            <InputSubmit type="submit" value="Registrar *AUN NO XD*" />
+            <InputSubmit type="submit" value="Registrar" />
           </Form>
         </>
       </Layout>
