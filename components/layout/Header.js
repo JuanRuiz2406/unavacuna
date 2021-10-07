@@ -78,7 +78,7 @@ export const Header = () => {
           </>
         ) : (
           <FlexDiv>
-            <Link href="/Login" passHref={true}>
+            <Link href="/login" passHref={true}>
               <Button bgColor="true">Acceder </Button>
             </Link>
             <Button
