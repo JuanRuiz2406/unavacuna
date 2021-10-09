@@ -1,16 +1,10 @@
-import Head from 'next/head'
-import Link from "next/link";
-
-export default function Home() {
+const Home = () => {
   return (
-    <div>
-
-      <h1>Rutas Públicas</h1>
-      <Link href="/login">Login</Link>
-
-      <h1>Rutas Privadas</h1>
-      <Link href="/vaccine">Vacunas</Link>
-
+    <div >
+      <div>Public</div>
+      <div><a href="/private">Go to Private</a></div>
     </div>
   )
 }
+
+export default Home;

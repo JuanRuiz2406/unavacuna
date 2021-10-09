@@ -1,29 +1,31 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import firebase from "firebase/app";
-import "firebase/auth";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
-import initFirebase from "../../firebase/FirebaseConfig";
+import initFirebase from './config';
+
 
 import {
   removeUserCookie,
   setUserCookie,
-  getUserFromCookie,
-} from "../../helpers/UserCookie";
+  getUserFromCookie
+} from './userCookie';
 
 initFirebase();
 
-export const mapUserData = async (user) => {
+export const mapUserData = async user => {
   const { uid, email } = user;
   const token = await user.getIdToken(true);
   return {
-    uid,
+    id: uid,
     email,
-    token,
+    token
   };
 };
 
-const UseUser = () => {
+  
+const useUser = () => {
   const [user, setUser] = useState();
   const router = useRouter();
 
@@ -32,9 +34,9 @@ const UseUser = () => {
       .auth()
       .signOut()
       .then(() => {
-        router.push("/");
+        router.push('/');
       })
-      .catch((e) => {
+      .catch(e => {
         console.error(e);
       });
   };
@@ -42,7 +44,7 @@ const UseUser = () => {
   useEffect(() => {
     const cancelAuthListener = firebase
       .auth()
-      .onIdTokenChanged(async (userToken) => {
+      .onIdTokenChanged(async userToken => {
         if (userToken) {
           const userData = await mapUserData(userToken);
           setUserCookie(userData);
@@ -64,4 +66,4 @@ const UseUser = () => {
   return { user, logout };
 };
 
-export { UseUser };
+export { useUser };

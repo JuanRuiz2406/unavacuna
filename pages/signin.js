@@ -1,32 +1,32 @@
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase from "firebase/app";
-import "firebase/auth";
-import initFirebase from "../src/firebase/FirebaseConfig";
-import { setUserCookie } from "../src/helpers/UserCookie";
-import { mapUserData } from "../src/components/hooks/UseUser";
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import { setUserCookie } from '../auth/userCookie';
+import { mapUserData } from '../auth/useUser';
+import initFirebase from '../auth/config';
 
 initFirebase();
 const firebaseAuthConfig = ({ signInSuccessUrl }) => ({
-  signInFlow: "popup",
+  signInFlow: 'popup',
   signInOptions: [
     {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      requireDisplayName: false,
+      requireDisplayName: false
     },
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
   signInSuccessUrl,
-  credentialHelper: "none",
+  credentialHelper: 'none',
   callbacks: {
     signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
       const userData = await mapUserData(user);
       setUserCookie(userData);
-    },
-  },
+    }
+  }
 });
 
 const FirebaseAuth = () => {
-  const signInSuccessUrl = "/vaccine";
+  const signInSuccessUrl = "/private"
   return (
     <div>
       <StyledFirebaseAuth

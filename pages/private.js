@@ -1,8 +1,8 @@
-import Auth from '../../src/components/auth/Auth';
-import { UseUser } from '../../src/components/hooks/UseUser';
+import withAuth from '../auth/withAuth';
+import { useUser } from '../auth/useUser';
 
-const Vaccine = () => {
-  const { user, logout } = UseUser();
+const Private = () => {
+  const { user, logout } = useUser();
 
   return (
     <div >
@@ -18,4 +18,5 @@ const Vaccine = () => {
   )
 }
 
-export default Auth(Vaccine);
+export default withAuth(Private);
+  
