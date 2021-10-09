@@ -1,33 +1,11 @@
 import React, { useContext } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
-import { Search } from "../ui/Search";
 import { Navigation } from "./Navigation";
 import { Button } from "./../ui/Button";
 import { FirebaseContext } from "../../firebase/Index";
-
-import Logo from "../../public/logo.png";
-
-const ContainerHeader = styled.div`
-  max-width: 1200px;
-  width: 95%;
-  margin: 0 auto;
-  white-space: nowrap;
-
-  @media (min-width: 768px) {
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
-const FlexDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 export const Header = () => {
   const { user, FirebaseInit } = useContext(FirebaseContext);
@@ -40,12 +18,6 @@ export const Header = () => {
       `}
     >
       <ContainerHeader>
-        <FlexDiv>
-          <Image src={Logo} width={150} height={90} />
-        </FlexDiv>
-
-        <FlexDiv>{user && <Search />}</FlexDiv>
-
         <FlexDiv>
           <Navigation />
         </FlexDiv>
@@ -94,3 +66,22 @@ export const Header = () => {
     </header>
   );
 };
+
+const ContainerHeader = styled.div`
+  max-width: 1200px;
+  width: 95%;
+  margin: 0 auto;
+  white-space: nowrap;
+
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+`;

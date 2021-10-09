@@ -13,7 +13,6 @@ const InputSubmit = styled.button`
   width: 3rem;
   display: block;
   background-size: 4rem;
-  background-image: url("/search.png");
   background-repeat: no-repeat;
   position: absolute;
   right: 0.5rem;
@@ -21,6 +20,7 @@ const InputSubmit = styled.button`
   background-color: white;
   border: none;
   text-indent: -9999px;
+  /* background-image: url("/search.png"); */
 
   &:hover {
     cursor: pointer;

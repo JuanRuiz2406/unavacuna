@@ -120,7 +120,7 @@ export default function RegisterAdmin() {
                 placeholder="Cédula"
                 value={idCard}
                 onChange={handleChange}
-                onBlur={handleBlur}
+                // onBlur={handleBlur}
               />
             </Field>
             {errors.idCard && <Error>{errors.idCard}</Error>}
@@ -133,7 +133,7 @@ export default function RegisterAdmin() {
                 placeholder="Nombre"
                 value={name}
                 onChange={handleChange}
-                onBlur={handleBlur}
+                // onBlur={handleBlur}
               />
             </Field>
             {errors.name && <Error>{errors.name}</Error>}
@@ -146,7 +146,7 @@ export default function RegisterAdmin() {
                 placeholder="Apellido"
                 value={lastLame}
                 onChange={handleChange}
-                onBlur={handleBlur}
+                // onBlur={handleBlur}
               />
             </Field>
             {errors.lastLame && <Error>{errors.lastLame}</Error>}
@@ -159,7 +159,7 @@ export default function RegisterAdmin() {
                 placeholder="Edad"
                 value={age}
                 onChange={handleChange}
-                onBlur={handleBlur}
+                // onBlur={handleBlur}
               />
             </Field>
             {errors.age && <Error>{errors.age}</Error>}
@@ -172,7 +172,7 @@ export default function RegisterAdmin() {
                 placeholder="Dirección"
                 value={address}
                 onChange={handleChange}
-                onBlur={handleBlur}
+                // onBlur={handleBlur}
               />
             </Field>
             {errors.address && <Error>{errors.address}</Error>}
@@ -185,7 +185,7 @@ export default function RegisterAdmin() {
                 placeholder="Lugar de Vacunación"
                 value={vaccinationPlace}
                 onChange={handleChange}
-                onBlur={handleBlur}
+                // onBlur={handleBlur}
               />
             </Field>
             {errors.vaccinationPlace && (
