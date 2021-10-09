@@ -1,10 +1,11 @@
+import { Layout } from "./../components/layout/Layout";
+
 const Home = () => {
   return (
-    <div >
-      <div>Public</div>
-      <div><a href="/private">Go to Private</a></div>
-    </div>
-  )
-}
+    <Layout>
+      <h1>Hola mundo</h1>
+    </Layout>
+  );
+};
 
 export default Home;

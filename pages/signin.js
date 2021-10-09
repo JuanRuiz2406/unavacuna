@@ -1,40 +1,31 @@
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import { setUserCookie } from '../auth/userCookie';
-import { mapUserData } from '../auth/useUser';
-import initFirebase from '../auth/config';
+import { useContext } from "react";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import FirebaseContext from "../firebase/FirebaseContext";
+import { FirebaseAuthConfig } from "../firebase/FirebaseAuthConfig";
+import { Layout } from "./../components/layout/Layout";
 
-initFirebase();
-const firebaseAuthConfig = ({ signInSuccessUrl }) => ({
-  signInFlow: 'popup',
-  signInOptions: [
-    {
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      requireDisplayName: false
-    },
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  ],
-  signInSuccessUrl,
-  credentialHelper: 'none',
-  callbacks: {
-    signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
-      const userData = await mapUserData(user);
-      setUserCookie(userData);
-    }
-  }
-});
+import { css } from "@emotion/react";
 
 const FirebaseAuth = () => {
-  const signInSuccessUrl = "/private"
+  const { user, auth } = useContext(FirebaseContext);
+  const signInSuccessUrl = "/";
   return (
-    <div>
-      <StyledFirebaseAuth
-        uiConfig={firebaseAuthConfig({ signInSuccessUrl })}
-        firebaseAuth={firebase.auth()}
-        signInSuccessUrl={signInSuccessUrl}
-      />
-    </div>
+    <Layout>
+      <div
+        css={css`
+          margin: 4rem;
+        `}
+      >
+        <StyledFirebaseAuth
+          uiConfig={FirebaseAuthConfig({
+            signInSuccessUrl,
+            disableReg: user ? false : true,
+          })}
+          firebaseAuth={auth}
+          signInSuccessUrl={signInSuccessUrl}
+        />
+      </div>
+    </Layout>
   );
 };
 
