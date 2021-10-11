@@ -4,6 +4,7 @@ import { Global, css } from "@emotion/react";
 import Head from "next/head";
 
 import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 export const Layout = (props) => {
   return (
@@ -30,6 +31,7 @@ export const Layout = (props) => {
             font-weight: 700;
             font-size: 1.6rem;
             line-height: 1.5;
+            min-height: 100%;
           }
           h1,
           h2,
@@ -77,6 +79,8 @@ export const Layout = (props) => {
       <Header />
 
       <main>{props.children}</main>
+
+      <Footer/>
     </>
   );
 };
