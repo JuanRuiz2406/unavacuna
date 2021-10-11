@@ -28,7 +28,7 @@ export default function registerValidate(values) {
   if (!values.vaccinationPlace) {
     errors.vaccinationPlace = "El lugar de vacunación es obligatorio";
   }
-  
+  /*
   if (!values.dose) {
     errors.dose = "La dosis es obligatoria";
   }
@@ -36,6 +36,6 @@ export default function registerValidate(values) {
   if (!values.vaccine) {
     errors.vaccine = "La vacuna es obligatoria";
   }
-
+*/
   return errors;
 }
