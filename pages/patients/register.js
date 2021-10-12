@@ -3,12 +3,10 @@ import React, { useState, useContext, useEffect } from "react";
 import { css } from "@emotion/react";
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
-import { UseForm } from "../../hooks/UseForm";
+import { UseValidation } from "../../hooks/UseValidation";
 import registerPatient from "../../validations/RegisterPatient";
 import { useRouter } from "next/router";
-import {SavePatient}  from "../../components/firestore/SavePatient";
 import WithAuth from "./../../components/unavacuna/WithAuth";
-
 const initialState = {
   idCard: "",
   name: "",
@@ -23,8 +21,8 @@ const initialState = {
 const register = () => {
   const [registerError, setRegisterError] = useState(null);
   const [vaccines, setVaccines] = useState([]);
-  const { values, handleInputChange} =
-    UseForm(initialState);
+  const { values, errors, handleChange, handleSubmit, handleBlur } =
+    UseValidation(initialState, registerPatient);
 
   const {
     idCard,
@@ -105,7 +103,7 @@ const register = () => {
           >
             Registrar Paciente
           </h1>
-          <Form noValidate>
+          <Form onSubmit={handleSubmit} noValidate>
             <Field>
               <label htmlFor="idCard">Cédula</label>
               <input
@@ -113,11 +111,11 @@ const register = () => {
                 name="idCard"
                 placeholder="Cédula"
                 value={idCard}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 // onBlur={handleBlur}
               />
             </Field>
-           
+            {errors.idCard && <Error>{errors.idCard}</Error>}
 
             <Field>
               <label htmlFor="name">Nombre</label>
@@ -126,11 +124,12 @@ const register = () => {
                 name="name"
                 placeholder="Nombre"
                 value={name}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 // onBlur={handleBlur}
               />
             </Field>
-         
+            {errors.name && <Error>{errors.name}</Error>}
+
             <Field>
               <label htmlFor="lastLame">Apellido</label>
               <input
@@ -138,11 +137,12 @@ const register = () => {
                 name="lastLame"
                 placeholder="Apellido"
                 value={lastLame}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 // onBlur={handleBlur}
               />
             </Field>
-          
+            {errors.lastLame && <Error>{errors.lastLame}</Error>}
+
             <Field>
               <label htmlFor="age">Edad</label>
               <input
@@ -150,11 +150,12 @@ const register = () => {
                 name="age"
                 placeholder="Edad"
                 value={age}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 // onBlur={handleBlur}
               />
             </Field>
-           
+            {errors.age && <Error>{errors.age}</Error>}
+
             <Field>
               <label htmlFor="address">Dirección</label>
               <input
@@ -162,11 +163,11 @@ const register = () => {
                 name="address"
                 placeholder="Dirección"
                 value={address}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 // onBlur={handleBlur}
               />
             </Field>
-         
+            {errors.address && <Error>{errors.address}</Error>}
 
             <Field>
               <label htmlFor="vaccinationPlace">Lugar de Vacunación</label>
@@ -175,11 +176,13 @@ const register = () => {
                 name="vaccinationPlace"
                 placeholder="Lugar de Vacunación"
                 value={vaccinationPlace}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 // onBlur={handleBlur}
               />
             </Field>
-            
+            {errors.vaccinationPlace && (
+              <Error>{errors.vaccinationPlace}</Error>
+            )}
 
             <Field>
               <label htmlFor="dose">Dosis</label>
@@ -187,31 +190,31 @@ const register = () => {
                 id="dose"
                 name="dose"
                 value={dose}
-                onChange={handleInputChange}
+                onChange={handleChange}
               >
                 <option value="Dosis 1">Dosis 1</option>;
                 <option value="Dosis 2">Dosis 2</option>;
               </select>
             </Field>
-         
+            {errors.dose && <Error>{errors.dose}</Error>}
+
             <Field>
               <label htmlFor="vaccine">Vacuna</label>
               <select
                 id="vaccine"
                 name="vaccine"
                 value={vaccine}
-                onChange={handleInputChange}
+                onChange={handleChange}
               >
                 {vaccines.map((item, i) => {
                   return <option value={item.name}>{item.name}</option>;
                 })}
               </select>
             </Field>
-           
+            {errors.vaccine && <Error>{errors.vaccine}</Error>}
 
             {registerError && <Error>{registerError}</Error>}
-            {/*<InputSubmit type="submit" value="Registrar" />*/}
-            <SavePatient patient={values} />
+            <InputSubmit type="submit" value="Registrar" />
           </Form>
         </>
       </Layout>
