@@ -19,7 +19,7 @@ const FirebaseAuth = () => {
         <StyledFirebaseAuth
           uiConfig={FirebaseAuthConfig({
             signInSuccessUrl,
-            disableReg: user ? false : true,
+            disableReg: user ? false : false,
           })}
           firebaseAuth={auth}
           signInSuccessUrl={signInSuccessUrl}
