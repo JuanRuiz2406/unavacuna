@@ -15,7 +15,9 @@ export const Layout = (props) => {
             --gray: #3d3d3d;
             --gray2: #6f6f6f;
             --gray3: #e1e1e1;
+            --gray4: #575757ff;
             --red: #a31e32;
+            --white: #fdfdfd;
           }
           html {
             font-size: 62.5%;
@@ -32,10 +34,7 @@ export const Layout = (props) => {
             font-size: 1.6rem;
             line-height: 1.5;
             min-height: 100%;
-          }
-          h1,
-          h2,
-          h3 {
+            background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(234,249,249,0.67) 0.1%, rgba(239,249,251,0.63) 90.1% );          h3 {
             margin: 0 0 2rem 0;
             line-height: 1.5;
           }
@@ -80,7 +79,7 @@ export const Layout = (props) => {
 
       <main>{props.children}</main>
 
-      <Footer/>
+      <Footer />
     </>
   );
 };

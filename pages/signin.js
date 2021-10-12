@@ -13,13 +13,14 @@ const FirebaseAuth = () => {
     <Layout>
       <div
         css={css`
-          margin: 4rem;
+          margin-top: 4rem;
+          margin-bottom: 50px;
         `}
       >
         <StyledFirebaseAuth
           uiConfig={FirebaseAuthConfig({
             signInSuccessUrl,
-            disableReg: user ? false : false,
+            disableReg: user ? false : true,
           })}
           firebaseAuth={auth}
           signInSuccessUrl={signInSuccessUrl}
