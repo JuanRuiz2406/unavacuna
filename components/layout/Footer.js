@@ -35,11 +35,20 @@ const A = styled.a`
     margin: 0.8px;
 `;
 
-const Copyright = styled.div`
+const Project = styled.div`
     text-align: center;
     color: #6F6F6F;
     background-color: #333333;
 `;
+
+const Copyright = styled.div`
+    text-align: center;
+    color: #6F6F6F;
+    background-color: #232323ff;
+`;
+
+
+
 
 export const Footer = () =>{
     return(
@@ -61,6 +70,9 @@ export const Footer = () =>{
                         <A href="https://github.com/drialler" target="_blank">Adrián Valdelomar Espinoza</A>
                     </Li>
                 </Ul>
+                <Project> 
+                    Proyecto con Fines Académicos
+                </Project>
                 <Copyright>
                     UNAVacuna V 2.1.1 @ 2021
                 </Copyright>
