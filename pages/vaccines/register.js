@@ -3,10 +3,12 @@ import React, { useState, useContext } from "react";
 import { css } from "@emotion/react";
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
-import { UseValidation } from "../../hooks/UseValidation";
 import { useRouter } from "next/router";
-import registerVaccineValidate from "../../validations/Vaccine";
-import WithAuth from './../../components/unavacuna/WithAuth';
+
+import { UseValidation } from "../../hooks/UseValidation";
+import WithAuth from "./../../components/unavacuna/WithAuth";
+import FirebaseContext from "../../firebase/FirebaseContext";
+import vaccineValidate from "../../validations/Vaccine";
 
 const initialState = {
   name: "",
@@ -14,28 +16,18 @@ const initialState = {
   quantity: "",
 };
 const register = () => {
-
   const [registerError, setRegisterError] = useState(null);
+  const [exists, setExists] = useState(false);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
-    UseValidation(initialState, registerVaccineValidate);
+    UseValidation(initialState, vaccineValidate, register);
 
+  const { firestore } = useContext(FirebaseContext);
   const { name, description, quantity } = values;
-
   const router = useRouter();
-  /*
-  const { user, FirebaseInit } = useContext(FirebaseContext);
 
-  const vaccinesRef = collection(FirebaseInit.db, "vaccines");
-
-  async function registerVaccine() {
+  async function register() {
     try {
-      if (!user) {
-        return router.push("/Login");
-      }
-      const docRef = doc(FirebaseInit.db, "vaccines", name);
-      const docSnap = await getDoc(docRef);
-
       const newQuantity = Number(quantity);
 
       const vaccine = {
@@ -45,19 +37,22 @@ const register = () => {
         registerDate: Date.now(),
       };
 
-      if (docSnap.exists()) {
-        setRegisterError("Vacuna ya existe en la base de datos");
-      } else {
-        await setDoc(doc(vaccinesRef, name), vaccine);
-        return router.push("/vaccines");
-      }
+      firestore
+        .collection("vaccines")
+        .doc(name)
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            setRegisterError("Vacuna ya existe en la base de datos");
+          } else {
+            firestore.collection("vaccines").doc(name).set(vaccine);
+            return router.push("/vaccines");
+          }
+        });
     } catch (error) {
-      console.log(error);
-
       setRegisterError(error.message);
     }
   }
-*/
+
   return (
     <Layout>
       <>
@@ -69,7 +64,7 @@ const register = () => {
         >
           Registro de Vacuna
         </h1>
-        <Form onSubmit={handleSubmit} noValidate>
+        <Form onSubmit={handleSubmit}>
           <fieldset>
             <legend>Proporcionar información</legend>
             <Field>

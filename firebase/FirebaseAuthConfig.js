@@ -14,8 +14,8 @@ export const FirebaseAuthConfig = ({
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
       disableSignUp: {
         status: disableReg,
-        adminEmail: "soporte@unavaquita.cr",
-        helpLink: "https://elvinlab.github.io/profile/",
+        adminEmail: "soporte@unavacuna.cr",
+        helpLink: "https://unavacuna.cr/soporte",
       },
       requireDisplayName: true,
     },
