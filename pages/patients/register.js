@@ -139,13 +139,14 @@ const register = () => {
 
             <Field>
               <label htmlFor="address">Dirección</label>
-              <input
+              <textarea
                 type="text"
+                raws="3"
                 name="address"
                 placeholder="Dirección"
                 value={address}
                 onChange={handleChange}
-                // onBlur={handleBlur}
+                onBlur={handleBlur}
               />
             </Field>
             {errors.address && <Error>{errors.address}</Error>}

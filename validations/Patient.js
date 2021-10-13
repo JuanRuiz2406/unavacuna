@@ -35,8 +35,6 @@ export default function patientValidate(values) {
 
   if (!values.address) {
     errors.address = "La direccion es obligatoria";
-  } else if (values.address.length > 50) {
-    errors.address = "La direccion es muy extenso";
   }
 
  
