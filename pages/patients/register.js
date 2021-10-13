@@ -1,96 +1,64 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 
 import { css } from "@emotion/react";
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
-import { UseValidation } from "../../hooks/UseValidation";
-import registerPatient from "../../validations/RegisterPatient";
 import { useRouter } from "next/router";
+
+import { UseValidation } from "../../hooks/UseValidation";
 import WithAuth from "./../../components/unavacuna/WithAuth";
+import FirebaseContext from "../../firebase/FirebaseContext";
+import patientValidate from "../../validations/Patient";
+//import registerPatient from "../../validations/RegisterPatient";
+
 const initialState = {
   idCard: "",
   name: "",
-  lastLame: "",
+  lastName: "",
+  birthDate: "",
   age: "",
   address: "",
-  vaccinationPlace: "",
-  dose: "",
-  vaccine: "",
 };
-
 const register = () => {
   const [registerError, setRegisterError] = useState(null);
-  const [vaccines, setVaccines] = useState([]);
+  //const [vaccines, setVaccines] = useState([]);
+
   const { values, errors, handleChange, handleSubmit, handleBlur } =
-    UseValidation(initialState, registerPatient);
+    UseValidation(initialState, patientValidate, register);
 
-  const {
-    idCard,
-    name,
-    lastLame,
-    age,
-    address,
-    vaccinationPlace,
-    dose,
-    vaccine,
-  } = values;
-
+  const { firestore } = useContext(FirebaseContext);
+  const { idCard, name, lastName, birthDate, age, address } = values;
   const router = useRouter();
-  /*
-  const { user, FirebaseInit } = useContext(FirebaseContext);
 
-  const patientsRef = collection(FirebaseInit.db, "patients");
-
-  useEffect(() => {
-    getVaccines();
-  }, [vaccines]);
-
-  const getVaccines = async () => {
-    const getVaccinesFromFirebase = [];
-
-    const querySnapshot = await getDocs(
-      collection(FirebaseInit.db, "vaccines")
-    );
-
-    querySnapshot.forEach((doc) => {
-      getVaccinesFromFirebase.push({ ...doc.data(), key: doc.id });
-    });
-    setVaccines(getVaccinesFromFirebase);
-  };
-
-  async function patientRegister() {
+  async function register() {
     try {
-      if (!user) {
-        return router.push("/Login");
-      }
-      const docRef = doc(FirebaseInit.db, "patients", idCard);
-      const docSnap = await getDoc(docRef);
+      //const newQuantity = Number(quantity);
 
       const patient = {
         idCard,
         name,
-        lastLame,
+        lastName,
+        birthDate,
         age,
         address,
-        vaccinationPlace,
-        dose,
-        vaccine,
         registerDate: Date.now(),
       };
 
-      if (docSnap.exists()) {
-        setRegisterError("Paciente ya existe en la base de datos");
-      } else {
-        await setDoc(doc(patientsRef, idCard), patient);
-        return router.push("/patients");
-      }
+      firestore
+        .collection("patients")
+        .doc(idCard)
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            setRegisterError("Este Paciente ya existe");
+          } else {
+            firestore.collection("patients").doc(idCard).set(patient);
+            return router.push("/patients");
+          }
+        });
     } catch (error) {
-      console.log(error);
-
       setRegisterError(error.message);
     }
   }
-*/
   return (
     <div>
       <Layout>
@@ -103,7 +71,7 @@ const register = () => {
           >
             Registrar Paciente
           </h1>
-          <Form onSubmit={handleSubmit} noValidate>
+          <Form onSubmit={handleSubmit}>
             <Field>
               <label htmlFor="idCard">Cédula</label>
               <input
@@ -131,17 +99,30 @@ const register = () => {
             {errors.name && <Error>{errors.name}</Error>}
 
             <Field>
-              <label htmlFor="lastLame">Apellido</label>
+              <label htmlFor="lastName">Apellido</label>
               <input
                 type="text"
-                name="lastLame"
+                name="lastName"
                 placeholder="Apellido"
-                value={lastLame}
+                value={lastName}
                 onChange={handleChange}
-                // onBlur={handleBlur}
               />
             </Field>
-            {errors.lastLame && <Error>{errors.lastLame}</Error>}
+            {errors.lastName && <Error>{errors.lastName}</Error>}
+
+            <Field>
+              <label htmlFor="birthDate">Fecha de Nacimiento</label>
+              <input
+                type="date"
+                min="1921-12-12"
+                max="2016-12-12"
+                name="birthDate"
+                placeholder="Fecha de Nacimiento"
+                value={birthDate}
+                onChange={handleChange}
+              />
+            </Field>
+            {errors.birthDate && <Error>{errors.birthDate}</Error>}
 
             <Field>
               <label htmlFor="age">Edad</label>
@@ -168,50 +149,6 @@ const register = () => {
               />
             </Field>
             {errors.address && <Error>{errors.address}</Error>}
-
-            <Field>
-              <label htmlFor="vaccinationPlace">Lugar de Vacunación</label>
-              <input
-                type="text"
-                name="vaccinationPlace"
-                placeholder="Lugar de Vacunación"
-                value={vaccinationPlace}
-                onChange={handleChange}
-                // onBlur={handleBlur}
-              />
-            </Field>
-            {errors.vaccinationPlace && (
-              <Error>{errors.vaccinationPlace}</Error>
-            )}
-
-            <Field>
-              <label htmlFor="dose">Dosis</label>
-              <select
-                id="dose"
-                name="dose"
-                value={dose}
-                onChange={handleChange}
-              >
-                <option value="Dosis 1">Dosis 1</option>;
-                <option value="Dosis 2">Dosis 2</option>;
-              </select>
-            </Field>
-            {errors.dose && <Error>{errors.dose}</Error>}
-
-            <Field>
-              <label htmlFor="vaccine">Vacuna</label>
-              <select
-                id="vaccine"
-                name="vaccine"
-                value={vaccine}
-                onChange={handleChange}
-              >
-                {vaccines.map((item, i) => {
-                  return <option value={item.name}>{item.name}</option>;
-                })}
-              </select>
-            </Field>
-            {errors.vaccine && <Error>{errors.vaccine}</Error>}
 
             {registerError && <Error>{registerError}</Error>}
             <InputSubmit type="submit" value="Registrar" />

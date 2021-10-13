@@ -42,7 +42,7 @@ const register = () => {
         .doc(name)
         .onSnapshot((doc) => {
           if (doc.exists) {
-            setRegisterError("Vacuna ya existe en la base de datos");
+            setRegisterError("Esta Vacuna ya existe");
           } else {
             firestore.collection("vaccines").doc(name).set(vaccine);
             return router.push("/vaccines");
@@ -52,7 +52,6 @@ const register = () => {
       setRegisterError(error.message);
     }
   }
-
   return (
     <Layout>
       <>

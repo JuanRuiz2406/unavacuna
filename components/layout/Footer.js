@@ -36,9 +36,10 @@ export const Footer = () => {
       </div>
       <ul
         css={css`
-        text-align: center;
-        padding: 0.5rem;
-      `}>
+          text-align: center;
+          padding: 0.5rem;
+        `}
+      >
         <Li>
           <A href="" target="_blank">
             Elvin González González
@@ -60,12 +61,14 @@ export const Footer = () => {
           </A>
         </Li>
       </ul>
-      <div css={css`
+      <div
+        css={css`
           text-align: center;
           color: var(--gray4);
           padding: 0.5rem;
-        `}>
-            UNAVacuna V 2.1.1 @ 2021
+        `}
+      >
+        UNAVacuna V 2.1.1 @ 2021
       </div>
     </ContFooter>
   );
