@@ -11,7 +11,7 @@ export const Navigation = () => {
       <Link href="/patients">Pacientes</Link>
       <Link href="/vaccines">Vacunas</Link>
       <Image src={logo} width={150} height={90} />
-      <Link href="/">Estadisticas(Again XD)</Link>
+      <Link href="/vaccinates">Vacunados</Link>
     </Nav>
   );
 };

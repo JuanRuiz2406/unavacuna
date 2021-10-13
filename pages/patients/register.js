@@ -52,7 +52,7 @@ const register = () => {
             setRegisterError("Este Paciente ya existe");
           } else {
             firestore.collection("patients").doc(idCard).set(patient);
-            return router.push("/patients");
+            return router.push("/vaccinates/" + idCard);
           }
         });
     } catch (error) {
