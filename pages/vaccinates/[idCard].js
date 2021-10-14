@@ -47,9 +47,9 @@ const Vaccinate = () => {
       try {
         const vaccinate = {
           idCardPatient: idCard,
-          vaccineName: "",
-          dose: "",
-          vaccinationPlace: "",
+          vaccineName,
+          dose,
+          vaccinationPlace,
           vaccinationDate: Date.now(),
         };
         firestore.collection("vaccinates").add(vaccinate);
