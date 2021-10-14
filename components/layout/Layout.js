@@ -18,6 +18,13 @@ export const Layout = (props) => {
             --gray4: #575757ff;
             --red: #a31e32;
             --white: #fdfdfd;
+            --blue: #1A73E8;
+            --input-color: #80868B;
+            --border-color: #DADCE0;
+
+            --body-font: 'Roboto', sans-serif;
+            --normal-font-size: 1.55rem;
+            --small-font-size: 1rem;
           }
           html {
             font-size: 62.5%;
@@ -34,15 +41,10 @@ export const Layout = (props) => {
             font-size: 1.6rem;
             line-height: 1.5;
             min-height: 100%;
-            background-image: radial-gradient(
-              circle farthest-corner at 10% 20%,
-              rgba(234, 249, 249, 0.67) 0.1%,
-              rgba(239, 249, 251, 0.63) 90.1%
-            );
+            background: linear-gradient(90deg, rgba(240,253,255,1) 0%, rgba(255,255,255,1) 50%, rgba(240,253,255,1) 100%);
             h3 {
-              margin: 0 0 2rem 0;
-              line-height: 1.5;
-            }
+            margin: 0 0 2rem 0;
+            line-height: 1.5;
           }
           h1,
           h2 {

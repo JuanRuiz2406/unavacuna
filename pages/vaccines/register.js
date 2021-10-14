@@ -54,15 +54,8 @@ const register = () => {
   return (
     <Layout>
       <>
-        <h1
-          css={css`
-            text-align: center;
-            margin-top: 5rem;
-          `}
-        >
-          Registro de Vacuna
-        </h1>
         <Form onSubmit={handleSubmit}>
+          <h1>Registro de Vacuna</h1>
           <fieldset>
             <legend>Proporcionar información</legend>
             <Field>

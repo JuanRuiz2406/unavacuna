@@ -5,7 +5,7 @@ const Vaccinates = () => {
   return (
     <Layout>
       <h1>Vacunados</h1>
-      <Link href="/vaccinates/1">Agregar</Link>
+      <Link href="/vaccine_patient/456456456">Agregar</Link>
     </Layout>
   );
 };
