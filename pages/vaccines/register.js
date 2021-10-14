@@ -17,7 +17,6 @@ const initialState = {
 };
 const register = () => {
   const [registerError, setRegisterError] = useState(null);
-  const [exists, setExists] = useState(false);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
     UseValidation(initialState, vaccineValidate, register);
