@@ -3,7 +3,7 @@ export default function vaccine(values) {
 
   if (!values.name) {
     errors.name = "El nombre es obligatorio";
-  } else if (values.name.length > 10) {
+  } else if (values.name.length > 20) {
     errors.name = "El nombre es muy extenso";
   }
 
@@ -14,8 +14,6 @@ export default function vaccine(values) {
   }
   if (!values.quantity) {
     errors.quantity = "La cantidad es obligatoria";
-  } else if (/[1-9]/.test(values.quantity)) {
-    errors.quantity = "La cantidad de vacunas tiene que ser mayor";
   }
 
   return errors;

@@ -53,7 +53,6 @@ const Vaccinate = () => {
           vaccinationDate: Date.now(),
         };
         firestore.collection("vaccinates").add(vaccinate);
-        return router.push("/vaccinates");
       } catch (error) {
         setRegisterError(error.message);
       }

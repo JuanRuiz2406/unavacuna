@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { css } from "@emotion/react";
 import { Layout } from "../../components/layout/Layout";
@@ -17,6 +17,8 @@ const initialState = {
 };
 const register = () => {
   const [registerError, setRegisterError] = useState(null);
+
+  const [regSuccess, setRegSuccess] = useState(false);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
     UseValidation(initialState, vaccine, register);
@@ -44,13 +46,19 @@ const register = () => {
             setRegisterError("Esta Vacuna ya existe");
           } else {
             firestore.collection("vaccines").doc(name).set(vaccine);
-            return router.push("/vaccines");
+            setRegSuccess(true);
           }
         });
     } catch (error) {
       setRegisterError(error.message);
     }
   }
+
+  useEffect(() => {
+    if (regSuccess) {
+      return router.push("/vaccines");
+    }
+  }, [regSuccess]);
   return (
     <Layout>
       <>
