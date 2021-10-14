@@ -1,4 +1,4 @@
-export default function vaccineValidate(values) {
+export default function vaccine(values) {
   let errors = {};
 
   if (!values.name) {

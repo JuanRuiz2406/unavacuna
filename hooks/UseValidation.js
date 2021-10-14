@@ -29,7 +29,6 @@ export const UseValidation = (initState, validate, fn) => {
     setSubmitForm(true);
   };
 
-  //No se esta usando pero talvez mas adelante
   const handleBlur = () => {
     const validationErrors = validate(values);
     setErrors(validationErrors);

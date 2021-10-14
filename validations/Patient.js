@@ -1,4 +1,4 @@
-export default function patientValidate(values) {
+export default function patient(values) {
   let errors = {};
 
   if (!values.idCard) {

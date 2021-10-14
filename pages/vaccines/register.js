@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { UseValidation } from "../../hooks/UseValidation";
 import WithAuth from "./../../components/unavacuna/WithAuth";
 import FirebaseContext from "../../firebase/FirebaseContext";
-import vaccineValidate from "../../validations/Vaccine";
+import vaccine from "../../validations/Vaccine";
 
 const initialState = {
   name: "",
@@ -19,7 +19,7 @@ const register = () => {
   const [registerError, setRegisterError] = useState(null);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
-    UseValidation(initialState, vaccineValidate, register);
+    UseValidation(initialState, vaccine, register);
 
   const { firestore } = useContext(FirebaseContext);
   const { name, description, quantity } = values;

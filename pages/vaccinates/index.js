@@ -2,10 +2,12 @@ import { Layout } from "../../components/layout/Layout";
 import Link from "next/link";
 
 const Vaccinates = () => {
+  const idCard = "456456456";
+
   return (
     <Layout>
       <h1>Vacunados</h1>
-      <Link href="/vaccine_patient/456456456">Agregar</Link>
+      <Link href={`/vaccinates/${idCard}`}>Agregar</Link>
     </Layout>
   );
 };

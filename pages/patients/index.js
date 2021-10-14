@@ -52,7 +52,7 @@ const Patients = () => {
       </Layout>
 
       <Card>
-        <image />
+    
         <br />
         <p>nombre</p>
         <p>apellido</p>

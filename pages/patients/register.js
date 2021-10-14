@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { UseValidation } from "../../hooks/UseValidation";
 import WithAuth from "./../../components/unavacuna/WithAuth";
 import FirebaseContext from "../../firebase/FirebaseContext";
-import patientValidate from "../../validations/Patient";
+import patient from "../../validations/Patient";
 
 const initialState = {
   idCard: "",
@@ -19,10 +19,9 @@ const initialState = {
 };
 const register = () => {
   const [registerError, setRegisterError] = useState(null);
-  //const [vaccines, setVaccines] = useState([]);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
-    UseValidation(initialState, patientValidate, register);
+    UseValidation(initialState, patient, register);
 
   const { firestore } = useContext(FirebaseContext);
   const { idCard, name, lastName, birthDate, age, address } = values;
@@ -30,8 +29,6 @@ const register = () => {
 
   async function register() {
     try {
-      //const newQuantity = Number(quantity);
-
       const patient = {
         idCard,
         name,
@@ -50,13 +47,14 @@ const register = () => {
             setRegisterError("Este Paciente ya existe");
           } else {
             firestore.collection("patients").doc(idCard).set(patient);
-            return router.push("/vaccine_patient/" + idCard);
+            return router.push(`/vaccinates/${idCard}`);
           }
         });
     } catch (error) {
       setRegisterError(error.message);
     }
   }
+
   return (
     <Layout>
       <Form onSubmit={handleSubmit}>
@@ -69,6 +67,7 @@ const register = () => {
             placeholder="Cédula"
             value={idCard}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         </Field>
         {errors.idCard && <Error>{errors.idCard}</Error>}
@@ -81,6 +80,7 @@ const register = () => {
             placeholder="Nombre"
             value={name}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         </Field>
         {errors.name && <Error>{errors.name}</Error>}
@@ -93,6 +93,7 @@ const register = () => {
             placeholder="Apellidos"
             value={lastName}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         </Field>
         {errors.lastName && <Error>{errors.lastName}</Error>}
@@ -107,6 +108,7 @@ const register = () => {
             placeholder="Fecha de Nacimiento"
             value={birthDate}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         </Field>
         {errors.birthDate && <Error>{errors.birthDate}</Error>}
@@ -119,6 +121,7 @@ const register = () => {
             placeholder="Edad"
             value={age}
             onChange={handleChange}
+            onBlur={handleBlur}
           />
         </Field>
         {errors.age && <Error>{errors.age}</Error>}
