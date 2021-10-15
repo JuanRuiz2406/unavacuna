@@ -1,4 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
+import {
+  collection,
+  getDocs,
+} from "firebase/firestore";
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
 import { useRouter } from "next/router";
@@ -14,6 +18,7 @@ const initialState = {
   vaccineName: "",
   dose: "",
   vaccinationPlace: "",
+  vaccine:""
 };
 const Vaccinate = () => {
   const isMounted = UseIsMounted();
@@ -22,7 +27,8 @@ const Vaccinate = () => {
   const {
     query: { idCard },
   } = router;
-
+  
+  const [vaccines, setVaccines] = useState([]) 
   const [registerError, setRegisterError] = useState(null);
   const [regSuccess, setRegSuccess] = useState(false);
   const [notExists, setNotExists] = useState(false);
@@ -35,7 +41,7 @@ const Vaccinate = () => {
 
   const { firestore } = useContext(FirebaseContext);
 
-  const { vaccineName, dose, vaccinationPlace } = formValues;
+  const { vaccineName, dose, vaccinationPlace, vaccine } = formValues;
 
   const handleBlur = () => {
     const validationErrors = vaccinate(formValues);
@@ -53,6 +59,7 @@ const Vaccinate = () => {
           dose,
           vaccinationPlace,
           vaccinationDate: Date.now(),
+          vaccine
         };
         firestore.collection("vaccinates").add(vaccinate);
         setRegSuccess(true);
@@ -64,24 +71,39 @@ const Vaccinate = () => {
       setErrors(validationErrors.errors);
     }
   }
+ 
+  const getDataVaccine = () => {
+    firestore
+      .collection("vaccines")
+      .orderBy("registerDate", "desc")
+      .onSnapshot(callSnapShot);
+  };
 
-  // useEffect(() => {
-  //   getVaccines();
-  // }, [vaccines]);
+  function callSnapShot(snapshot) {
+    const VACCINE = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+    setVaccines(VACCINE);
+  }
+/*
+  const getVaccines = async () => {
+    const getVaccinesFromFirebase = [];
 
-  // const getVaccines = async () => {
-  //   const getVaccinesFromFirebase = [];
+     const querySnapshot = await firestore.collection("vaccinates")
+     
+     /*await getDocs(
+       collection(FirebaseContext, "vaccines")
+     );
 
-  //   const querySnapshot = await getDocs(
-  //     collection(FirebaseInit.db, "vaccines")
-  //   );
-
-  //   querySnapshot.forEach((doc) => {
-  //     getVaccinesFromFirebase.push({ ...doc.data(), key: doc.id });
-  //   });
-  //   setVaccines(getVaccinesFromFirebase);
-  // };
-
+     querySnapshot.forEach((doc) => {
+       getVaccinesFromFirebase.push({ ...doc.data(), key: doc.id });
+     });
+     setVaccines(getVaccinesFromFirebase);
+   };
+*/
   useEffect(() => {
     if (idCard && consultBD) {
       const getPatient = async () => {
@@ -99,7 +121,9 @@ const Vaccinate = () => {
 
       getPatient();
     }
-  }, [idCard, consultBD]);
+    getDataVaccine()
+  }, [idCard, consultBD, vaccines]);
+
 
   useEffect(() => {
     if (regSuccess) {
@@ -134,20 +158,20 @@ const Vaccinate = () => {
         </Field>
         {errors.idCardPatient && <Error>{errors.idCardPatient}</Error>}
 
-        {/* <Field>
+        <Field>
           <label htmlFor="vaccine">Vacuna</label>
           <select
             id="vaccine"
             name="vaccine"
             value={vaccine}
-            onChange={handleChange}
+            onChange={handleInputChange}
           >
             {vaccines.map((item, i) => {
               return <option value={item.name}>{item.name}</option>;
             })}
           </select>
         </Field>
-        {errors.vaccine && <Error>{errors.vaccine}</Error>} */}
+        {/*errors.vaccine && <Error>{errors.vaccine}</Error>*/}
 
         <Field>
           <label htmlFor="vaccineName">Nombre</label>
