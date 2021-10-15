@@ -24,8 +24,10 @@ const Vaccinate = () => {
   } = router;
 
   const [registerError, setRegisterError] = useState(null);
+  const [regSuccess, setRegSuccess] = useState(false);
   const [notExists, setNotExists] = useState(false);
   const [consultBD, setConsultBD] = useState(true);
+
   const [patient, setPatient] = useState([]);
   const [errors, setErrors] = useState({});
 
@@ -53,6 +55,7 @@ const Vaccinate = () => {
           vaccinationDate: Date.now(),
         };
         firestore.collection("vaccinates").add(vaccinate);
+        setRegSuccess(true);
       } catch (error) {
         setRegisterError(error.message);
       }
@@ -80,6 +83,12 @@ const Vaccinate = () => {
       getPatient();
     }
   }, [idCard, consultBD]);
+
+  useEffect(() => {
+    if (regSuccess) {
+      return router.push("/vaccinates");
+    }
+  }, [regSuccess]);
 
   //Crear la pagina 404 y mandarle por parametro mensaje
   if (!isMounted) {
