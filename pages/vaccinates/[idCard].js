@@ -65,6 +65,23 @@ const Vaccinate = () => {
     }
   }
 
+  // useEffect(() => {
+  //   getVaccines();
+  // }, [vaccines]);
+
+  // const getVaccines = async () => {
+  //   const getVaccinesFromFirebase = [];
+
+  //   const querySnapshot = await getDocs(
+  //     collection(FirebaseInit.db, "vaccines")
+  //   );
+
+  //   querySnapshot.forEach((doc) => {
+  //     getVaccinesFromFirebase.push({ ...doc.data(), key: doc.id });
+  //   });
+  //   setVaccines(getVaccinesFromFirebase);
+  // };
+
   useEffect(() => {
     if (idCard && consultBD) {
       const getPatient = async () => {
@@ -112,9 +129,25 @@ const Vaccinate = () => {
             name="idCardPatient"
             value={patient.idCard}
             readOnly
+            disabled
           />
         </Field>
         {errors.idCardPatient && <Error>{errors.idCardPatient}</Error>}
+
+        {/* <Field>
+          <label htmlFor="vaccine">Vacuna</label>
+          <select
+            id="vaccine"
+            name="vaccine"
+            value={vaccine}
+            onChange={handleChange}
+          >
+            {vaccines.map((item, i) => {
+              return <option value={item.name}>{item.name}</option>;
+            })}
+          </select>
+        </Field>
+        {errors.vaccine && <Error>{errors.vaccine}</Error>} */}
 
         <Field>
           <label htmlFor="vaccineName">Nombre</label>
@@ -131,14 +164,12 @@ const Vaccinate = () => {
 
         <Field>
           <label htmlFor="dose">Dosis</label>
-          <input
-            type="text"
-            name="dose"
-            placeholder="Dosis"
-            value={dose}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-          />
+          <select id="dose" name="dose" value={dose} onChange={handleInputChange}>
+            <option value="Dosis 1">Dosis 1</option>;
+            <option value="Dosis 2">Dosis 2</option>;
+            <option value="Dosis 3">Dosis 3</option>;
+            <option value="Refuerzo">Refuerzo</option>;
+          </select>
         </Field>
         {errors.dose && <Error>{errors.dose}</Error>}
 

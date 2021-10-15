@@ -34,6 +34,7 @@ export const Field = styled.div`
     font-size: 1.8rem;
   }
   input,
+  select,
   textarea {
     flex: 1;
     padding: 1rem;
