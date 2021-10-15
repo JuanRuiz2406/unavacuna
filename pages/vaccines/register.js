@@ -18,8 +18,6 @@ const initialState = {
 const register = () => {
   const [registerError, setRegisterError] = useState(null);
 
-  const [regSuccess, setRegSuccess] = useState(false);
-
   const { values, errors, handleChange, handleSubmit, handleBlur } =
     UseValidation(initialState, vaccine, register);
 
@@ -46,7 +44,7 @@ const register = () => {
             setRegisterError("Esta Vacuna ya existe");
           } else {
             firestore.collection("vaccines").doc(name).set(vaccine);
-            setRegSuccess(true);
+            return router.push("/vaccines");
           }
         });
     } catch (error) {
@@ -54,11 +52,6 @@ const register = () => {
     }
   }
 
-  useEffect(() => {
-    if (regSuccess) {
-      return router.push("/vaccines");
-    }
-  }, [regSuccess]);
   return (
     <Layout>
       <>

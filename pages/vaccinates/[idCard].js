@@ -2,12 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
 import { useRouter } from "next/router";
-import UseIsMounted from "../../hooks/UseIsMounted";
+import { UseForm } from "./../../hooks/UseForm";
 
 import WithAuth from "../../components/unavacuna/WithAuth";
-import FirebaseContext from "../../firebase/FirebaseContext";
-import { UseForm } from "./../../hooks/UseForm";
+import ErrorPage from "./../404";
 import vaccinate from "../../validations/Vaccinate";
+import UseIsMounted from "../../hooks/UseIsMounted";
+import FirebaseContext from "../../firebase/FirebaseContext";
 
 const initialState = {
   namePatient: "",
@@ -23,12 +24,10 @@ const Vaccinate = () => {
     query: { idCard },
   } = router;
 
-  const [vaccines, setVaccines] = useState([]);
   const [registerError, setRegisterError] = useState(null);
-  const [regSuccess, setRegSuccess] = useState(false);
   const [notExists, setNotExists] = useState(false);
   const [consultBD, setConsultBD] = useState(true);
-
+  const [vaccines, setVaccines] = useState([]);
   const [patient, setPatient] = useState([]);
   const [errors, setErrors] = useState({});
 
@@ -57,7 +56,6 @@ const Vaccinate = () => {
           vaccinationDate: Date.now(),
         };
         firestore.collection("vaccinates").add(vaccinate);
-        setRegSuccess(true);
       } catch (error) {
         setRegisterError(error.message);
       }
@@ -67,7 +65,7 @@ const Vaccinate = () => {
     }
   }
 
-  const getDataVaccine = () => {
+  const getDataVaccines = () => {
     firestore
       .collection("vaccines")
       .orderBy("registerDate", "desc")
@@ -75,51 +73,45 @@ const Vaccinate = () => {
   };
 
   function callSnapShot(snapshot) {
-    const VACCINE = snapshot.docs.map((doc) => {
+    const vacine = snapshot.docs.map((doc) => {
       return {
         id: doc.id,
         ...doc.data(),
       };
     });
-    setVaccines(VACCINE);
+    setVaccines(vacine);
   }
+
+  const getPatient = async () => {
+    if (isMounted) {
+      const query = await firestore.collection("patients").doc(idCard);
+      const patient = await query.get();
+
+      if (patient.exists) {
+        setConsultBD(false);
+        setPatient(patient.data());
+        getDataVaccines();
+      } else {
+        setConsultBD(false);
+        setNotExists(true);
+      }
+    }
+  };
 
   useEffect(() => {
     if (idCard && consultBD) {
-      const getPatient = async () => {
-        const query = await firestore.collection("patients").doc(idCard);
-        const patient = await query.get();
-
-        if (patient.exists) {
-          setConsultBD(false);
-          setPatient(patient.data());
-        } else {
-          setConsultBD(false);
-          setNotExists(true);
-        }
-      };
-
       getPatient();
     }
-    getDataVaccine();
-  }, [idCard, consultBD, vaccines]);
+  }, [idCard, consultBD]);
 
-  useEffect(() => {
-    if (regSuccess) {
-      return router.push("/vaccinates");
-    }
-  }, [regSuccess]);
-
-  //Crear la pagina 404 y mandarle por parametro mensaje
   if (!isMounted) {
-    return "No se pudo montar esta vara";
+    <ErrorPage msg={"Problemas al encontrar la pagina"} />;
   }
 
-  //Se puede tunear mas con un styled componete tipo spinner
   if (!Object.keys(patient).length && !notExists) return "Cargando...";
 
   return notExists ? (
-    <h1>No existe el paciente, llamar 404</h1>
+    <ErrorPage msg={"No existe el paciente"} />
   ) : (
     <Layout>
       <Form onSubmit={handleRegister}>
@@ -156,8 +148,12 @@ const Vaccinate = () => {
             onChange={handleInputChange}
           >
             <option value="">Seleccione ▼</option>;
-            {vaccines.map((item, i) => {
-              return <option value={item.name}>{item.name}</option>;
+            {vaccines.map((item, index) => {
+              return (
+                <option key={index} value={item.name}>
+                  {item.name}
+                </option>
+              );
             })}
           </select>
         </Field>
