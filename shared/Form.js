@@ -9,7 +9,6 @@ export const Form = styled.form`
   border-radius: 1rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
   font-family: var(--body-font);
-  font-size: var(--normal-font-size);
 
   h1 {
     padding-top: 2rem;
@@ -19,7 +18,7 @@ export const Form = styled.form`
   fieldset {
     margin: 2rem 0;
     border: 1px solid #e1e1e1;
-    font-size: 2rem;
+
     padding: 2rem;
   }
 `;
@@ -31,7 +30,6 @@ export const Field = styled.div`
   border: none;
   label {
     flex: 0 0 120px;
-    font-size: 1.8rem;
   }
   input,
   select,
@@ -54,7 +52,6 @@ export const InputSubmit = styled.input`
   padding: 1.5rem;
   text-align: center;
   color: #fff;
-  font-size: 1.8rem;
   text-transform: uppercase;
   font-family: "PT Sans", sans-serif;
   font-weight: 700;

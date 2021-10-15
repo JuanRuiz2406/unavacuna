@@ -18,7 +18,6 @@ const Li = styled.li`
 `;
 
 const A = styled.a`
-  font-size: 20px;
   color: var(--gray4);
   display: online-black;
   text-align: center;

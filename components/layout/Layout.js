@@ -21,13 +21,9 @@ export const Layout = (props) => {
             --blue: #1a73e8;
             --input-color: #80868b;
             --border-color: #dadce0;
-
             --body-font: "Roboto", sans-serif;
-            --normal-font-size: 1.55rem;
-            --small-font-size: 1rem;
           }
           html {
-            font-size: 62.5%;
             box-sizing: border-box;
           }
           *,
@@ -44,7 +40,6 @@ export const Layout = (props) => {
             );
             font-family: "PT Sans", sans-serif;
             font-weight: 700;
-            font-size: 1.6rem;
             line-height: 1.5;
           }
           h1,
