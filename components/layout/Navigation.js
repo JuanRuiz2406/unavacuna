@@ -20,7 +20,7 @@ const Nav = styled.nav`
   margin: 1.5rem;
 
   a {
-    font-size: px;
+    
     margin-left: 2rem;
     color: var(--gray);
     font-family: "PT Sans", sans-serif;
