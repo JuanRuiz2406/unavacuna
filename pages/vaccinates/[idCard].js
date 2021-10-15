@@ -27,6 +27,7 @@ const Vaccinate = () => {
   const [registerError, setRegisterError] = useState(null);
   const [notExists, setNotExists] = useState(false);
   const [consultBD, setConsultBD] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [vaccines, setVaccines] = useState([]);
   const [patient, setPatient] = useState([]);
   const [errors, setErrors] = useState({});
@@ -83,18 +84,16 @@ const Vaccinate = () => {
   }
 
   const getPatient = async () => {
-    if (isMounted) {
-      const query = await firestore.collection("patients").doc(idCard);
-      const patient = await query.get();
+    const query = await firestore.collection("patients").doc(idCard);
+    const patient = await query.get();
 
-      if (patient.exists) {
-        setConsultBD(false);
-        setPatient(patient.data());
-        getDataVaccines();
-      } else {
-        setConsultBD(false);
-        setNotExists(true);
-      }
+    if (patient.exists && isLoaded) {
+      setConsultBD(false);
+      setPatient(patient.data());
+      getDataVaccines();
+    } else if (isLoaded) {
+      setConsultBD(false);
+      setNotExists(true);
     }
   };
 
@@ -102,6 +101,10 @@ const Vaccinate = () => {
     if (idCard && consultBD) {
       getPatient();
     }
+
+    return () => {
+      setIsLoaded(false);
+    };
   }, [idCard, consultBD]);
 
   if (!isMounted) {

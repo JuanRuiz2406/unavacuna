@@ -20,6 +20,8 @@ const Patients = () => {
   const isMounted = UseIsMounted();
 
   const [patients, setPatients] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(true);
+
   const { firestore } = useContext(FirebaseContext);
 
   const getData = () => {
@@ -30,19 +32,20 @@ const Patients = () => {
   };
 
   function callSnapShot(snapshot) {
-    const patients = snapshot.docs.map((doc) => {
+    const data = snapshot.docs.map((doc) => {
       return {
         id: doc.id,
         ...doc.data(),
       };
     });
-    setPatients(patients);
+    if (isLoaded) setPatients(data);
   }
 
   useEffect(() => {
-    if (isMounted) {
-      getData();
-    }
+    getData();
+    return () => {
+      setIsLoaded(false);
+    };
   }, []);
 
   return (
