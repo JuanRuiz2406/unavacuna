@@ -18,11 +18,11 @@ export const Layout = (props) => {
             --gray4: #575757ff;
             --red: #a31e32;
             --white: #fdfdfd;
-            --blue: #1A73E8;
-            --input-color: #80868B;
-            --border-color: #DADCE0;
+            --blue: #1a73e8;
+            --input-color: #80868b;
+            --border-color: #dadce0;
 
-            --body-font: 'Roboto', sans-serif;
+            --body-font: "Roboto", sans-serif;
             --normal-font-size: 1.55rem;
             --small-font-size: 1rem;
           }
@@ -36,13 +36,20 @@ export const Layout = (props) => {
             box-sizing: inherit;
           }
           body {
+            background: linear-gradient(
+              90deg,
+              rgba(240, 253, 255, 1) 0%,
+              rgba(255, 255, 255, 1) 50%,
+              rgba(240, 253, 255, 1) 100%
+            );
             font-family: "PT Sans", sans-serif;
             font-weight: 700;
             font-size: 1.6rem;
             line-height: 1.5;
-            min-height: 100%;
-            background: linear-gradient(90deg, rgba(240,253,255,1) 0%, rgba(255,255,255,1) 50%, rgba(240,253,255,1) 100%);
-            h3 {
+          }
+          h1,
+          h2,
+          h3 {
             margin: 0 0 2rem 0;
             line-height: 1.5;
           }
