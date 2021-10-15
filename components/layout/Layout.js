@@ -4,6 +4,7 @@ import { Global, css } from "@emotion/react";
 import Head from "next/head";
 
 import { Header } from "./Header";
+import { Footer } from "./Footer";
 
 export const Layout = (props) => {
   return (
@@ -14,7 +15,16 @@ export const Layout = (props) => {
             --gray: #3d3d3d;
             --gray2: #6f6f6f;
             --gray3: #e1e1e1;
+            --gray4: #575757ff;
             --red: #a31e32;
+            --white: #fdfdfd;
+            --blue: #1A73E8;
+            --input-color: #80868B;
+            --border-color: #DADCE0;
+
+            --body-font: 'Roboto', sans-serif;
+            --normal-font-size: 1.55rem;
+            --small-font-size: 1rem;
           }
           html {
             font-size: 62.5%;
@@ -30,10 +40,9 @@ export const Layout = (props) => {
             font-weight: 700;
             font-size: 1.6rem;
             line-height: 1.5;
-          }
-          h1,
-          h2,
-          h3 {
+            min-height: 100%;
+            background: linear-gradient(90deg, rgba(240,253,255,1) 0%, rgba(255,255,255,1) 50%, rgba(240,253,255,1) 100%);
+            h3 {
             margin: 0 0 2rem 0;
             line-height: 1.5;
           }
@@ -77,6 +86,8 @@ export const Layout = (props) => {
       <Header />
 
       <main>{props.children}</main>
+
+      <Footer />
     </>
   );
 };

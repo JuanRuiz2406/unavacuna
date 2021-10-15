@@ -13,7 +13,8 @@ const FirebaseAuth = () => {
     <Layout>
       <div
         css={css`
-          margin: 4rem;
+          margin-top: 4rem;
+          margin-bottom: 50px;
         `}
       >
         <StyledFirebaseAuth
