@@ -29,7 +29,6 @@ export const Header = () => {
                 css={css`
                   margin-right: 2rem;
                   color: var(--gray);
-                  font-size: 2rem;
                   font-weight: 700;
                 `}
               >
