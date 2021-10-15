@@ -9,7 +9,7 @@ export default function vaccine(values) {
 
   if (!values.description) {
     errors.description = "La descipcion es obligatoria";
-  } else if (values.description.length > 20) {
+  } else if (values.description.length > 250) {
     errors.description = "La descipcion es muy extenso";
   }
   if (!values.quantity) {
