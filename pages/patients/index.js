@@ -94,7 +94,7 @@ const Patients = () => {
           {
             icon: Edit,
             tooltip: "Editar",
-            //onClick: (event, rowData) => onSelectAddEditJob(rowData)
+            onClick: (event, rowData) => alert("Kiaa"),
           },
         ]}
         options={TableOptions}
