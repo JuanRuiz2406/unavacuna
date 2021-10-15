@@ -1,24 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-  collection,
-  getDocs,
-} from "firebase/firestore";
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
 import { useRouter } from "next/router";
 import UseIsMounted from "../../hooks/UseIsMounted";
 
-import { UseValidation } from "../../hooks/UseValidation";
 import WithAuth from "../../components/unavacuna/WithAuth";
 import FirebaseContext from "../../firebase/FirebaseContext";
 import { UseForm } from "./../../hooks/UseForm";
 import vaccinate from "../../validations/Vaccinate";
 
 const initialState = {
+  namePatient: "",
   vaccineName: "",
   dose: "",
   vaccinationPlace: "",
-  vaccine:""
 };
 const Vaccinate = () => {
   const isMounted = UseIsMounted();
@@ -27,8 +22,8 @@ const Vaccinate = () => {
   const {
     query: { idCard },
   } = router;
-  
-  const [vaccines, setVaccines] = useState([]) 
+
+  const [vaccines, setVaccines] = useState([]);
   const [registerError, setRegisterError] = useState(null);
   const [regSuccess, setRegSuccess] = useState(false);
   const [notExists, setNotExists] = useState(false);
@@ -41,7 +36,7 @@ const Vaccinate = () => {
 
   const { firestore } = useContext(FirebaseContext);
 
-  const { vaccineName, dose, vaccinationPlace, vaccine } = formValues;
+  const { vaccineName, dose, vaccinationPlace } = formValues;
 
   const handleBlur = () => {
     const validationErrors = vaccinate(formValues);
@@ -55,11 +50,11 @@ const Vaccinate = () => {
       try {
         const vaccinate = {
           idCardPatient: idCard,
+          namePatient: `${patient.name} ${patient.lastName}`,
           vaccineName,
           dose,
           vaccinationPlace,
           vaccinationDate: Date.now(),
-          vaccine
         };
         firestore.collection("vaccinates").add(vaccinate);
         setRegSuccess(true);
@@ -71,7 +66,7 @@ const Vaccinate = () => {
       setErrors(validationErrors.errors);
     }
   }
- 
+
   const getDataVaccine = () => {
     firestore
       .collection("vaccines")
@@ -106,9 +101,8 @@ const Vaccinate = () => {
 
       getPatient();
     }
-    getDataVaccine()
+    getDataVaccine();
   }, [idCard, consultBD, vaccines]);
-
 
   useEffect(() => {
     if (regSuccess) {
@@ -128,7 +122,6 @@ const Vaccinate = () => {
     <h1>No existe el paciente, llamar 404</h1>
   ) : (
     <Layout>
-      <h1>Vamos a vacunar al paciente: * Consultar Ced {idCard} *</h1>
       <Form onSubmit={handleRegister}>
         <h1>Registrar Vacunado</h1>
         <Field>
@@ -144,36 +137,41 @@ const Vaccinate = () => {
         {errors.idCardPatient && <Error>{errors.idCardPatient}</Error>}
 
         <Field>
-          <label htmlFor="vaccine">Vacuna</label>
+          <label htmlFor="namePatient">Nombre de Paciente</label>
+          <input
+            type="text"
+            name="namePatient"
+            value={`${patient.name} ${patient.lastName}`}
+            readOnly
+            disabled
+          />
+        </Field>
+
+        <Field>
+          <label htmlFor="vaccineName">Vacuna</label>
           <select
-            id="vaccine"
-            name="vaccine"
-            value={vaccine}
+            id="vaccineName"
+            name="vaccineName"
+            value={vaccineName}
             onChange={handleInputChange}
           >
+            <option value="">Seleccione ▼</option>;
             {vaccines.map((item, i) => {
               return <option value={item.name}>{item.name}</option>;
             })}
           </select>
         </Field>
-        {/*errors.vaccine && <Error>{errors.vaccine}</Error>*/}
-
-        <Field>
-          <label htmlFor="vaccineName">Nombre</label>
-          <input
-            type="text"
-            name="vaccineName"
-            placeholder="Nombre"
-            value={vaccineName}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-          />
-        </Field>
         {errors.vaccineName && <Error>{errors.vaccineName}</Error>}
 
         <Field>
           <label htmlFor="dose">Dosis</label>
-          <select id="dose" name="dose" value={dose} onChange={handleInputChange}>
+          <select
+            id="dose"
+            name="dose"
+            value={dose}
+            onChange={handleInputChange}
+          >
+            <option value="">Seleccione ▼</option>;
             <option value="Dosis 1">Dosis 1</option>;
             <option value="Dosis 2">Dosis 2</option>;
             <option value="Dosis 3">Dosis 3</option>;

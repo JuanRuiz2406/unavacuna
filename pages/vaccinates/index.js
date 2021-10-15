@@ -2,7 +2,7 @@ import { Layout } from "../../components/layout/Layout";
 import Link from "next/link";
 
 const Vaccinates = () => {
-  const idCard = "456456456";
+  const idCard = "789789789";
 
   return (
     <Layout>
