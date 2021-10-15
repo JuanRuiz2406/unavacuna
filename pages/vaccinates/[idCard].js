@@ -88,22 +88,7 @@ const Vaccinate = () => {
     });
     setVaccines(VACCINE);
   }
-/*
-  const getVaccines = async () => {
-    const getVaccinesFromFirebase = [];
 
-     const querySnapshot = await firestore.collection("vaccinates")
-     
-     /*await getDocs(
-       collection(FirebaseContext, "vaccines")
-     );
-
-     querySnapshot.forEach((doc) => {
-       getVaccinesFromFirebase.push({ ...doc.data(), key: doc.id });
-     });
-     setVaccines(getVaccinesFromFirebase);
-   };
-*/
   useEffect(() => {
     if (idCard && consultBD) {
       const getPatient = async () => {
