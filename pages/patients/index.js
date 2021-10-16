@@ -103,7 +103,7 @@ const Patients = () => {
             {
               icon: Edit,
               tooltip: "Editar",
-              onClick: (event, rowData) => alert("Kiaa"),
+              onClick: (event, rowData) => alert("Editar"),
             },
           ]}
           options={TableOptions}
