@@ -67,7 +67,6 @@ const register = () => {
             placeholder="Cédula"
             value={idCard}
             onChange={handleChange}
-            onBlur={handleBlur}
           />
         </Field>
         {errors.idCard && <Error>{errors.idCard}</Error>}
@@ -80,7 +79,6 @@ const register = () => {
             placeholder="Nombre"
             value={name}
             onChange={handleChange}
-            onBlur={handleBlur}
           />
         </Field>
         {errors.name && <Error>{errors.name}</Error>}
@@ -93,7 +91,6 @@ const register = () => {
             placeholder="Apellidos"
             value={lastName}
             onChange={handleChange}
-            onBlur={handleBlur}
           />
         </Field>
         {errors.lastName && <Error>{errors.lastName}</Error>}
@@ -108,7 +105,6 @@ const register = () => {
             placeholder="Fecha de Nacimiento"
             value={birthDate}
             onChange={handleChange}
-            onBlur={handleBlur}
           />
         </Field>
         {errors.birthDate && <Error>{errors.birthDate}</Error>}
@@ -121,7 +117,6 @@ const register = () => {
             placeholder="Edad"
             value={age}
             onChange={handleChange}
-            onBlur={handleBlur}
           />
         </Field>
         {errors.age && <Error>{errors.age}</Error>}

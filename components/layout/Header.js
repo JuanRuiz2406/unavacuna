@@ -7,6 +7,9 @@ import { Navigation } from "./Navigation";
 import { Button } from "./../../shared/Button";
 import FirebaseContext from "./../../firebase/FirebaseContext";
 
+import Image from "next/image";
+import logo from "../../public/images/logo.png";
+
 export const Header = () => {
   const { user, logout } = useContext(FirebaseContext);
 
@@ -18,6 +21,12 @@ export const Header = () => {
       `}
     >
       <ContainerHeader>
+        <FlexDiv>
+          <Link href="/" passHref={true}>
+            <Image src={logo} width={150} height={90} />
+          </Link>
+        </FlexDiv>
+
         <FlexDiv>
           <Navigation />
         </FlexDiv>
@@ -71,7 +80,6 @@ const ContainerHeader = styled.div`
   width: 95%;
   margin: 0 auto;
   white-space: nowrap;
-
   @media (min-width: 768px) {
     display: flex;
     justify-content: space-between;
@@ -82,5 +90,4 @@ const FlexDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  float: right;
 `;

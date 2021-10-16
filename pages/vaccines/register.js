@@ -67,7 +67,6 @@ const register = () => {
                 placeholder="Nombre de vacuna"
                 value={name}
                 onChange={handleChange}
-                onBlur={handleBlur}
               />
             </Field>
             {errors.name && <Error>{errors.name}</Error>}
@@ -80,7 +79,6 @@ const register = () => {
                 placeholder="Candidad de vacunas"
                 value={quantity}
                 onChange={handleChange}
-                onBlur={handleBlur}
               />
             </Field>
             {errors.quantity && <Error>{errors.quantity}</Error>}
