@@ -8,6 +8,8 @@ import FirebaseContext from "./../../firebase/FirebaseContext";
 
 import WithAuth from "./../../components/unavacuna/WithAuth";
 
+import { Button } from "./../../shared/Button";
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -54,11 +56,12 @@ const Card = styled.div`
   width: 260px;
   height: 320px;
   margin: 30px;
-  background: rgb(7, 119, 177);
+  background: rgb(91, 99, 111);
   background: linear-gradient(
     0deg,
-    rgba(7, 119, 177, 0.700717787114846) 0%,
-    rgba(0, 212, 255, 0.6979166666666667) 100%
+    rgba(91, 99, 111, 1) 0%,
+    rgba(79, 88, 101, 1) 21%,
+    rgba(64, 74, 89, 1) 100%
   );
   border-radius: 20px;
   border-bottom-left-radius: 160px;
@@ -78,7 +81,7 @@ const Content = styled.div`
   & h1 {
     font-size: 1em;
     margin-bottom: 2px;
-    color: #2f3132;
+    color: #fff;
   }
 `;
 
@@ -88,7 +91,7 @@ const Information = styled.p`
   -webkit-line-clamp: 2;
   line-clamp: 2;
   overflow: hidden;
-  color: #2f3132;
+  color: #fff;
 
   &:active {
     display: block;
@@ -122,7 +125,16 @@ const Vaccines = () => {
   return (
     <Layout>
       <h1>Lista de vacunas</h1>
-      <Link href="/vaccines/register">Agregar</Link>
+      <Link href="/vaccines/register">
+        <Button
+          css={css`
+            margin-left: 2rem;
+          `}
+          bgColor="true"
+        >
+          Agregar
+        </Button>
+      </Link>
       <Container>
         {vaccines.map((item, i) => {
           return (
