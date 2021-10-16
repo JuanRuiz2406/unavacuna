@@ -2,11 +2,9 @@ import errorImage from "../public/images/img1.svg";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-const ErrorPage = () => {
-
-
+const ErrorPage = ({ msg }) => {
   return (
-    <Body>
+    <Container>
       <div
         css={css`
           height: 100vh;
@@ -24,35 +22,25 @@ const ErrorPage = () => {
           src={errorImage}
         />
         <H1>
-          <h1
-            css={css`
-              color: rgb(233, 238, 245);
-              font-size: 20px;
-              padding: 20px;
-            `}
-          >
-            La página que ha solicitado no se encuentra disponible
-          </h1>
+          {msg ? msg : "La página que ha solicitado no se encuentra disponible"}
         </H1>
-        <div>
-        
-        </div>
+        <div></div>
       </div>
-    </Body>
+    </Container>
   );
 };
 
-const Body = styled.body`
-  background: rgb(8, 28, 34);
+const Container = styled.div`
   height: 100vh;
   font-family: "Open Sans", sans-serif;
 `;
 
 const H1 = styled.h1`
+  color: var(gray);
+  font-size: 20px;
+
   @media screen and (max-width: 630px) {
-    h1 {
-      font-size: 16px;
-    }
+    font-size: 16px;
   }
 `;
 export default ErrorPage;
