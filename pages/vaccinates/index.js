@@ -95,7 +95,7 @@ const Vaccinates = () => {
               editable: "never",
               render: (rowData) => (
                 <span className="whitespace-nowrap">
-                  {new Date(rowData.registerDate).toLocaleDateString("es-CR")}
+                  {new Date(rowData.vaccinationDate).toLocaleDateString("es-CR")}
                 </span>
               ),
             },
