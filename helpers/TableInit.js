@@ -85,7 +85,7 @@ export const TableLocalization = {
     exportName: "Exportar en CSV",
     searchTooltip: "Buscar",
     searchPlaceholder: "Buscar",
-    exportCSVName: "Descargar en EXEL",
+    exportCSVName: "Descargar en EXCEL",
     exportPDFName: "Descargar en PDF",
   },
 };

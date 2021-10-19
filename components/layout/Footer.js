@@ -31,7 +31,7 @@ export const Footer = () => {
         `}
       >
         <Li>
-          <A href="https://github.com/elvinlab" target="_blank">
+          <A href="https://elvinlab.github.io/profile" target="_blank">
             Elvin González González
           </A>
         </Li>

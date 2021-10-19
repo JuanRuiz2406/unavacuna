@@ -13,24 +13,20 @@ export default function patient(values) {
     errors.name = "* El nombre es obligatorio *";
   } else if (values.name.length > 20) {
     errors.name = "* El nombre es muy extenso *";
+  } else if (!/^[a-zA-Z\ áéíóúÁÉÍÓÚñÑ\s]*$/.test(values.name)) {
+    errors.name = "* Solo se permiten letras *";
   }
 
   if (!values.lastName) {
     errors.lastName = "* Los apellidos son obligatorios *";
   } else if (values.lastName.length > 30) {
     errors.lastName = "* Los apellidos son muy extensos *";
+  } else if (!/^[a-zA-Z\ áéíóúÁÉÍÓÚñÑ\s]*$/.test(values.lastName)) {
+    errors.lastName = "* Solo se permiten letras *";
   }
 
   if (!values.birthDate) {
     errors.birthDate = "* La fecha es obligatoria *";
-  }
-
-  if (!values.age) {
-    errors.age = "* La edad es obligatoria *";
-  } else if (values.age.length > 5) {
-    errors.age = "* El usuario tiene que ser mayor a 5 años *";
-  } else if (values.age.length > 120) {
-    errors.age = "* El usuario tiene que ser menor a 120 años *";
   }
 
   if (!values.address) {

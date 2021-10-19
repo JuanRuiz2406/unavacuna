@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
@@ -8,52 +8,61 @@ import { UseValidation } from "../../hooks/UseValidation";
 import WithAuth from "./../../components/unavacuna/WithAuth";
 import FirebaseContext from "../../firebase/FirebaseContext";
 import patient from "../../validations/Patient";
+import { GetAge } from "../../helpers/GetAge";
 
 const initialState = {
-  idCard: "",
+  idCard: 0,
   name: "",
   lastName: "",
   birthDate: "",
-  age: "",
   address: "",
 };
 const register = () => {
   const [registerError, setRegisterError] = useState(null);
+  const [redirect, setRedirect] = useState(false);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
     UseValidation(initialState, patient, register);
 
   const { firestore } = useContext(FirebaseContext);
-  const { idCard, name, lastName, birthDate, age, address } = values;
+  const { idCard, name, lastName, birthDate, address } = values;
   const router = useRouter();
 
   async function register() {
-    try {
-      const patient = {
-        idCard,
-        name,
-        lastName,
-        birthDate,
-        age,
-        address,
-        registerDate: Date.now(),
-      };
+    if (GetAge(birthDate) < 8) {
+      alert("Edad minima permitida es de 8");
+    } else {
+      try {
+        const patient = {
+          idCard,
+          name,
+          lastName,
+          birthDate,
+          age: GetAge(birthDate),
+          address,
+          registerDate: Date.now(),
+        };
 
-      firestore
-        .collection("patients")
-        .doc(idCard)
-        .onSnapshot((doc) => {
-          if (doc.exists) {
-            setRegisterError("Este Paciente ya existe");
-          } else {
-            firestore.collection("patients").doc(idCard).set(patient);
-            return router.push(`/vaccinates/${idCard}`);
-          }
-        });
-    } catch (error) {
-      setRegisterError(error.message);
+        firestore
+          .collection("patients")
+          .doc(idCard)
+          .onSnapshot((doc) => {
+            if (doc.exists) {
+              setRegisterError("Este Paciente ya existe");
+            } else {
+              firestore.collection("patients").doc(idCard).set(patient);
+              setRedirect(true);
+            }
+          });
+      } catch (error) {
+        setRegisterError(error.message);
+      }
     }
   }
+
+  useEffect(() => {
+    if (redirect) return router.push(`/vaccinates/${idCard}`);
+  }, [redirect]);
 
   return (
     <Layout>
@@ -64,6 +73,7 @@ const register = () => {
           <input
             type="number"
             name="idCard"
+            max="5"
             placeholder="Cédula"
             value={idCard}
             onChange={handleChange}
@@ -100,7 +110,7 @@ const register = () => {
           <input
             type="date"
             min="1921-12-12"
-            max="2016-12-12"
+            max="2013-12-12"
             name="birthDate"
             placeholder="Fecha de Nacimiento"
             value={birthDate}
@@ -108,18 +118,6 @@ const register = () => {
           />
         </Field>
         {errors.birthDate && <Error>{errors.birthDate}</Error>}
-
-        <Field>
-          <label htmlFor="age">Edad</label>
-          <input
-            type="number"
-            name="age"
-            placeholder="Edad"
-            value={age}
-            onChange={handleChange}
-          />
-        </Field>
-        {errors.age && <Error>{errors.age}</Error>}
 
         <Field>
           <label htmlFor="address">Dirección</label>

@@ -23,7 +23,9 @@ export const Header = () => {
       <ContainerHeader>
         <FlexDiv>
           <Link href="/" passHref={true}>
-            <Image src={logo} width={150} height={90} />
+            <a>
+              <Image src={logo} width={150} height={90} />
+            </a>
           </Link>
         </FlexDiv>
 
@@ -36,7 +38,6 @@ export const Header = () => {
             <FlexDiv>
               <p
                 css={css`
-                  margin-right: 2rem;
                   color: var(--gray);
                   font-weight: 700;
                 `}

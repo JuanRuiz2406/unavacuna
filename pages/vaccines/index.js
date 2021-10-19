@@ -99,28 +99,35 @@ const Information = styled.p`
 `;
 const Vaccines = () => {
   const [vaccines, setVaccines] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   const { firestore } = useContext(FirebaseContext);
 
-  useEffect(() => {
-    const getData = () => {
-      firestore
-        .collection("vaccines")
-        .orderBy("registerDate", "desc")
-        .onSnapshot(callSnapShot);
-    };
-    getData();
-  }, []);
+  const getData = () => {
+    firestore
+      .collection("vaccines")
+      .orderBy("registerDate", "desc")
+      .onSnapshot(callSnapShot);
+  };
 
   function callSnapShot(snapshot) {
-    const vaccines = snapshot.docs.map((doc) => {
+    const data = snapshot.docs.map((doc) => {
       return {
         id: doc.id,
         ...doc.data(),
       };
     });
-    setVaccines(vaccines);
+    if (isLoaded) {
+      setVaccines(data);
+    }
   }
+
+  useEffect(() => {
+    getData();
+    return () => {
+      setIsLoaded(false);
+    };
+  }, []);
 
   return (
     <Layout>
@@ -136,23 +143,18 @@ const Vaccines = () => {
         </Button>
       </Link>
       <Container>
-        {vaccines.map((item, i) => {
-          return (
-            <Card>
-              <Icon></Icon>
-              <Content>
-                <h1>Nombre: {item.name}</h1>
-                <h1>Cantidad: {item.quantity}</h1>
-                <h1>
-                  Fecha:{" "}
-                  {new Date(item.registerDate).toLocaleDateString("es-CR")}
-                </h1>
-                <h1>Descripción: </h1>
-                <Information>{item.description}</Information>
-              </Content>
-            </Card>
-          );
-        })}
+        {vaccines.map(({ name, quantity, registerDate, description }) => (
+          <Card key={name}>
+            <Icon></Icon>
+            <Content>
+              <h1>Nombre: {name}</h1>
+              <h1>Cantidad: {quantity}</h1>
+              <h1>Fecha: {registerDate}</h1>
+              <h1>Descripción: </h1>
+              <Information>{description}</Information>
+            </Content>
+          </Card>
+        ))}
       </Container>
     </Layout>
   );

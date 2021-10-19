@@ -27,6 +27,7 @@ const Vaccinate = () => {
   const [registerError, setRegisterError] = useState(null);
   const [notExists, setNotExists] = useState(false);
   const [consultBD, setConsultBD] = useState(true);
+  const [redirect, setRedirect] = useState(false);
   const [isLoaded, setIsLoaded] = useState(true);
   const [vaccines, setVaccines] = useState([]);
   const [patient, setPatient] = useState([]);
@@ -57,7 +58,7 @@ const Vaccinate = () => {
           vaccinationDate: Date.now(),
         };
         firestore.collection("vaccinates").add(vaccinate);
-        return router.push("/vaccinates");
+        setRedirect(true);
       } catch (error) {
         setRegisterError(error.message);
       }
@@ -107,6 +108,10 @@ const Vaccinate = () => {
       setIsLoaded(false);
     };
   }, [idCard, consultBD]);
+
+  useEffect(() => {
+    if (redirect) return router.push("/vaccinates");
+  }, [redirect]);
 
   if (!isMounted) {
     <ErrorPage msg={"Problemas al encontrar la pagina"} />;

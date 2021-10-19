@@ -15,6 +15,7 @@ import { css } from "@emotion/react";
 
 import Edit from "@material-ui/icons/Edit";
 import UseIsMounted from "../../hooks/UseIsMounted";
+import { PreparePatients } from "./../../helpers/PreparePatients";
 
 const Patients = () => {
   const isMounted = UseIsMounted();
@@ -38,7 +39,12 @@ const Patients = () => {
         ...doc.data(),
       };
     });
-    if (isLoaded) setPatients(data);
+
+    const newData = PreparePatients(data);
+
+    if (isLoaded) {
+      setPatients(newData);
+    }
   }
 
   useEffect(() => {
@@ -82,20 +88,19 @@ const Patients = () => {
             },
             { title: "Nombre", field: "name", editable: "never" },
             {
-              title: "Apellido",
+              title: "Apellidos",
               field: "lastName",
               editable: "never",
             },
-
             {
-              title: "Fecha",
+              title: "Edad",
+              field: "age",
+              editable: "never",
+            },
+            {
+              title: "Registrado",
               field: "registerDate",
               editable: "never",
-              render: (rowData) => (
-                <span className="whitespace-nowrap">
-                  {new Date(rowData.registerDate).toLocaleDateString("es-CR")}
-                </span>
-              ),
             },
           ]}
           data={patients}
