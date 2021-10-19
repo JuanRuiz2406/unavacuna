@@ -15,7 +15,7 @@ import { css } from "@emotion/react";
 
 import Edit from "@material-ui/icons/Edit";
 import UseIsMounted from "../../hooks/UseIsMounted";
-import { PreparePatients } from "./../../helpers/PreparePatients";
+import { PreparePatients } from '../../helpers/PreparePatients';
 
 const Patients = () => {
   const isMounted = UseIsMounted();
