@@ -4,19 +4,15 @@ import styled from "@emotion/styled";
 
 export const Navigation = () => {
   return (
-    <Nav>
-      <FlexDiv>
+    <FlexDiv>
+      <Nav>
         <Link href="/patients">Pacientes</Link>
-      </FlexDiv>
 
-      <FlexDiv>
         <Link href="/vaccines">Vacunas</Link>
-      </FlexDiv>
 
-      <FlexDiv>
         <Link href="/vaccinates">Vacunados</Link>
-      </FlexDiv>
-    </Nav>
+      </Nav>
+    </FlexDiv>
   );
 };
 
