@@ -1,103 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
-
-import Link from "next/link";
-import { css } from "@emotion/react";
-import styled from "@emotion/styled";
 import { Layout } from "./../../components/layout/Layout";
-import FirebaseContext from "./../../firebase/FirebaseContext";
+import Link from "next/link";
 
 import WithAuth from "./../../components/unavacuna/WithAuth";
-
+import React, { useContext, useEffect, useState } from "react";
+import FirebaseContext from "./../../firebase/FirebaseContext";
+import MaterialTable from "material-table";
 import { Button } from "./../../shared/Button";
+import {
+  TableIcons,
+  TableLocalization,
+  TableOptions,
+} from "../../helpers/TableInit";
+import { css } from "@emotion/react";
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 40px;
-`;
+import Edit from "@material-ui/icons/Edit";
+import UseIsMounted from "../../hooks/UseIsMounted";
+import { PrepareVaccines } from "../../helpers/PrepareVaccines";
 
-const Icon = styled.div`
-  position: relative;
-  width: 110px;
-  height: 70px;
-  background-color: #fff;
-  border-bottom-right-radius: 100px;
-  border-bottom-left-radius: 100px;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -50px;
-    width: 50px;
-    height: 22px;
-    background-color: transparent;
-    border-top-right-radius: 50px;
-    box-shadow: 15px -15px 0 15px #fff;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -50px;
-    width: 50px;
-    height: 22px;
-    background-color: transparent;
-    border-top-left-radius: 50px;
-    box-shadow: -15px -15px 0 15px #fff;
-  }
-`;
-
-const Card = styled.div`
-  position: relative;
-  width: 260px;
-  height: 320px;
-  margin: 30px;
-  background: rgb(91, 99, 111);
-  background: linear-gradient(
-    0deg,
-    rgba(91, 99, 111, 1) 0%,
-    rgba(79, 88, 101, 1) 21%,
-    rgba(64, 74, 89, 1) 100%
-  );
-  border-radius: 20px;
-  border-bottom-left-radius: 160px;
-  border-bottom-right-radius: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-`;
-
-const Content = styled.div`
-  position: absolute;
-  width: 100%;
-  padding: 20px;
-  padding-top: 75px;
-  text-align: left;
-
-  & h1 {
-    font-size: 1em;
-    margin-bottom: 2px;
-    color: #fff;
-  }
-`;
-
-const Information = styled.p`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
-  color: #fff;
-
-  &:active {
-    display: block;
-  }
-`;
 const Vaccines = () => {
+  const isMounted = UseIsMounted();
+
   const [vaccines, setVaccines] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
 
@@ -117,8 +39,11 @@ const Vaccines = () => {
         ...doc.data(),
       };
     });
+
+    const newData = PrepareVaccines(data);
+
     if (isLoaded) {
-      setVaccines(data);
+      setVaccines(newData);
     }
   }
 
@@ -130,33 +55,61 @@ const Vaccines = () => {
   }, []);
 
   return (
-    <Layout>
-      <h1>Lista de vacunas</h1>
-      <Link href="/vaccines/register">
-        <Button
+    isMounted && (
+      <Layout>
+        <h1
           css={css`
-            margin-left: 2rem;
+            text-align: center;
           `}
-          bgColor="true"
         >
-          Agregar
-        </Button>
-      </Link>
-      <Container>
-        {vaccines.map(({ name, quantity, registerDate, description }) => (
-          <Card key={name}>
-            <Icon></Icon>
-            <Content>
-              <h1>Nombre: {name}</h1>
-              <h1>Cantidad: {quantity}</h1>
-              <h1>Fecha: {registerDate}</h1>
-              <h1>Descripción: </h1>
-              <Information>{description}</Information>
-            </Content>
-          </Card>
-        ))}
-      </Container>
-    </Layout>
+          Vacunas
+        </h1>
+        <Link href="/vaccines/register">
+          <Button
+            css={css`
+              margin-left: 2rem;
+            `}
+            bgColor="true"
+          >
+            Agregar
+          </Button>
+        </Link>
+
+        <MaterialTable
+          style={{ margin: "2rem", padding: "1rem" }}
+          title={`reporte_vacunas-${new Date().toLocaleDateString("es-CR")}`}
+          icons={TableIcons}
+          localization={TableLocalization}
+          columns={[
+            {
+              title: "Nombre",
+              field: "name",
+              editable: "never",
+            },
+            { title: "Cantidad", field: "quantity", editable: "never" },
+            {
+              title: "Fecha",
+              field: "registerDate",
+              editable: "never",
+            },
+            {
+              title: "Descripción",
+              field: "description",
+              editable: "never",
+            },
+          ]}
+          data={vaccines}
+          actions={[
+            {
+              icon: Edit,
+              tooltip: "Editar",
+              onClick: (event, rowData) => alert("Editar"),
+            },
+          ]}
+          options={TableOptions}
+        />
+      </Layout>
+    )
   );
 };
 export default WithAuth(Vaccines);
