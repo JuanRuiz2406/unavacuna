@@ -13,6 +13,7 @@ import { css } from "@emotion/react";
 
 import Edit from "@material-ui/icons/Edit";
 import UseIsMounted from "../../hooks/UseIsMounted";
+import { PrepareDateFormat } from "../../helpers/PrepareDateFormat";
 
 const Vaccinates = () => {
   const isMounted = UseIsMounted();
@@ -36,7 +37,10 @@ const Vaccinates = () => {
         ...doc.data(),
       };
     });
-    if (isLoaded) setVaccinates(data);
+
+    const newData = PrepareDateFormat(data);
+
+    if (isLoaded) setVaccinates(newData);
   }
 
   useEffect(() => {
@@ -95,7 +99,9 @@ const Vaccinates = () => {
               editable: "never",
               render: (rowData) => (
                 <span className="whitespace-nowrap">
-                  {new Date(rowData.vaccinationDate).toLocaleDateString("es-CR")}
+                  {new Date(rowData.vaccinationDate).toLocaleDateString(
+                    "es-CR"
+                  )}
                 </span>
               ),
             },

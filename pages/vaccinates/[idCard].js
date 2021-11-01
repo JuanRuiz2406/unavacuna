@@ -71,7 +71,7 @@ const Vaccinate = () => {
   const getDataVaccines = () => {
     firestore
       .collection("vaccines")
-      .orderBy("registerDate", "desc")
+      .orderBy("createdAt", "desc")
       .onSnapshot(callSnapShot);
   };
 

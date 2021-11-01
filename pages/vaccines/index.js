@@ -15,7 +15,7 @@ import { css } from "@emotion/react";
 
 import Edit from "@material-ui/icons/Edit";
 import UseIsMounted from "../../hooks/UseIsMounted";
-import { PrepareVaccines } from "../../helpers/PrepareVaccines";
+import { PrepareDateFormat } from "../../helpers/PrepareDateFormat";
 
 const Vaccines = () => {
   const isMounted = UseIsMounted();
@@ -28,7 +28,7 @@ const Vaccines = () => {
   const getData = () => {
     firestore
       .collection("vaccines")
-      .orderBy("registerDate", "desc")
+      .orderBy("createdAt", "desc")
       .onSnapshot(callSnapShot);
   };
 
@@ -40,7 +40,7 @@ const Vaccines = () => {
       };
     });
 
-    const newData = PrepareVaccines(data);
+    const newData = PrepareDateFormat(data);
 
     if (isLoaded) {
       setVaccines(newData);
@@ -89,12 +89,7 @@ const Vaccines = () => {
             { title: "Cantidad", field: "quantity", editable: "never" },
             {
               title: "Fecha",
-              field: "registerDate",
-              editable: "never",
-            },
-            {
-              title: "Descripción",
-              field: "description",
+              field: "createdAt",
               editable: "never",
             },
           ]}

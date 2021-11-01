@@ -40,7 +40,7 @@ const register = () => {
           birthDate,
           age: GetAge(birthDate),
           address,
-          registerDate: Date.now(),
+          createdAt: Date.now(),
         };
 
         firestore
@@ -73,7 +73,6 @@ const register = () => {
           <input
             type="number"
             name="idCard"
-            max="5"
             placeholder="Cédula"
             value={idCard}
             onChange={handleChange}

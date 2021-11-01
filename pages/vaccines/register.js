@@ -33,7 +33,7 @@ const register = () => {
         name,
         quantity: newQuantity,
         description,
-        registerDate: Date.now(),
+        createdAt: Date.now(),
       };
 
       firestore

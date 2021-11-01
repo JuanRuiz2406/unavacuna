@@ -15,7 +15,7 @@ import { css } from "@emotion/react";
 
 import Edit from "@material-ui/icons/Edit";
 import UseIsMounted from "../../hooks/UseIsMounted";
-import { PreparePatients } from '../../helpers/PreparePatients';
+import { PrepareDateFormat } from '../../helpers/PrepareDateFormat';
 
 const Patients = () => {
   const isMounted = UseIsMounted();
@@ -28,7 +28,7 @@ const Patients = () => {
   const getData = () => {
     firestore
       .collection("patients")
-      .orderBy("registerDate", "desc")
+      .orderBy("createdAt", "desc")
       .onSnapshot(callSnapShot);
   };
 
@@ -40,7 +40,7 @@ const Patients = () => {
       };
     });
 
-    const newData = PreparePatients(data);
+    const newData = PrepareDateFormat(data);
 
     if (isLoaded) {
       setPatients(newData);
@@ -99,7 +99,7 @@ const Patients = () => {
             },
             {
               title: "Registrado",
-              field: "registerDate",
+              field: "createdAt",
               editable: "never",
             },
           ]}

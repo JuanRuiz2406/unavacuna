@@ -6,9 +6,9 @@ export const Navigation = () => {
   return (
     <FlexDiv>
       <Nav>
-        <Link href="/patients">Pacientes</Link>
-
         <Link href="/vaccines">Vacunas</Link>
+
+        <Link href="/patients">Pacientes</Link>
 
         <Link href="/vaccinates">Vacunados</Link>
       </Nav>
