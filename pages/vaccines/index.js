@@ -16,9 +16,12 @@ import { css } from "@emotion/react";
 import Edit from "@material-ui/icons/Edit";
 import UseIsMounted from "../../hooks/UseIsMounted";
 import { PrepareDateFormat } from "../../helpers/PrepareDateFormat";
+import { useRouter } from "next/router";
 
 const Vaccines = () => {
   const isMounted = UseIsMounted();
+
+  const router = useRouter();
 
   const [vaccines, setVaccines] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
@@ -98,7 +101,8 @@ const Vaccines = () => {
             {
               icon: Edit,
               tooltip: "Editar",
-              onClick: (event, rowData) => alert("Editar"),
+              onClick: (event, rowData) =>
+                router.push(`vaccines/${rowData.id}`),
             },
           ]}
           options={TableOptions}

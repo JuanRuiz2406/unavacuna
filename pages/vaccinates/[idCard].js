@@ -120,7 +120,7 @@ const Vaccinate = () => {
   if (!Object.keys(patient).length && !notExists) return "Cargando...";
 
   return notExists ? (
-    <ErrorPage msg={"No existe el paciente"} />
+    <ErrorPage msg={"No existe la vacuna"} />
   ) : (
     <Layout>
       <Form onSubmit={handleRegister}>
