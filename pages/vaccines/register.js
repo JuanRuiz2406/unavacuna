@@ -1,6 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 
-import { css } from "@emotion/react";
 import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
 import { useRouter } from "next/router";
