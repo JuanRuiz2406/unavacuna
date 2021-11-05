@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Bar, Radar } from 'react-chartjs-2';
+import { Bar, PolarArea, Pie } from 'react-chartjs-2';
 import styled from "@emotion/styled";
-
 
 import { Layout } from "./../components/layout/Layout";
 import FirebaseContext from './../firebase/FirebaseContext';
-
 
 const options = {
   indexAxis: 'y',
@@ -22,19 +20,14 @@ const options = {
     },
     title: {
       display: false,
-      text: 'Chart.js Horizontal Bar Chart',
     },
   },
 };
 
 const options2 = {
   plugins: {
-    legend: {
-      display: false
-    },
     title: {
       display: false,
-      text: 'Chart.js Horizontal Bar Chart',
     },
   },
   elements: {
@@ -48,10 +41,16 @@ const options2 = {
   },
 };
 
+const doses = ['Dosis 1', 'Dosis 2', 'Dosis 3', 'Refuerzo'];
+
 const Home = () => {
-  const [vaccineColor, setVaccineColor] = useState([]);
-  const [dataChart, setDataChart] = useState([]);
   const [vaccines, setVaccines] = useState([]);
+  const [dataChart, setDataChart] = useState([]);
+  const [dataChart2, setDataChart2] = useState([]);
+  const [dataChart3, setDataChart3] = useState([]);
+  const [vaccineColor, setVaccineColor] = useState([]);
+  const [vaccineColor2, setVaccineColor2] = useState([]);
+
   const [isLoaded, setIsLoaded] = useState(true);
 
   const { firestore } = useContext(FirebaseContext);
@@ -67,13 +66,22 @@ const Home = () => {
       return doc.data().name;
     });
 
+    const quantity = snapshot.docs.map((doc) => {
+      return doc.data().quantity;
+    });
+
     if (isLoaded) {
       getCountByVaccine(data);
+      setDataChart3(quantity);
       setVaccines(data);
-
     }
   }
 
+  function getColor() {
+    return "hsl(" + 360 * Math.random() + ',' +
+      (25 + 70 * Math.random()) + '%,' +
+      75 + '%)'
+  }
   const getCountByVaccine = (dataVaccines) => {
 
     dataVaccines.forEach(element => {
@@ -83,11 +91,20 @@ const Home = () => {
         .get()
         .then((querySnapshot) => {
           setDataChart((e) => [...e, querySnapshot.docs.length]);
-          setVaccineColor((e) => [...e, "#" + ((1 << 24) * Math.random() | 0).toString(16)]);
+          setVaccineColor((e) => [...e, getColor()]);
+          setVaccineColor2((e) => [...e, getColor()]);
         });
     });
 
-
+    doses.forEach(element => {
+      firestore
+        .collection("vaccinates")
+        .where("dose", "==", element)
+        .get()
+        .then((querySnapshot) => {
+          setDataChart2((e) => [...e, querySnapshot.docs.length]);
+        });
+    });
   }
 
   useEffect(() => {
@@ -109,13 +126,30 @@ const Home = () => {
   };
 
   const data2 = {
+    labels: doses,
+    datasets: [
+      {
+        data: dataChart2,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(75, 192, 192, 0.5)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const data3 = {
     labels: vaccines,
     datasets: [
       {
-        data: dataChart,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1,
+        label: '# of Votes',
+        data: dataChart3,
+        backgroundColor: vaccineColor2,
+        borderColor: ['white'],
+        borderWidth: 2,
       },
     ],
   };
@@ -123,15 +157,20 @@ const Home = () => {
   return (
     <Layout>
 
-      <DIV>
-        <h1>En linea Cantidad de pacientes por vacuna</h1>
+      <DIV data-loader="lazy">
+        <h3>Grafio #1 Cantidad de pacientes por vacuna</h3>
         <Bar data={data} options={options} />
         <br />
+        <hr />
         <br />
-        <h1>Radar Cantidad de pacientes por vacuna</h1>
-        <Radar data={data2} options={options2} />
+        <h3>Grafio #2 Cantidad de pacientes por dosis</h3>
+        <PolarArea data={data2} options={options2} />
+        <br />
+        <hr />
+        <br />
+        <h3>Grafio #3 Cantidad de vacunas disponibles</h3>
+        <Pie data={data3} />
       </DIV>
-
 
     </Layout>
   );
@@ -140,9 +179,12 @@ const Home = () => {
 export default Home;
 
 const DIV = styled.div`
-  width: 50%;
+  width: 60%;
   margin: 5rem auto 0 auto;
   padding: 0rem 5rem;
   text-align: center;
   color: var(--red);
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;

@@ -28,13 +28,12 @@ export const Header = () => {
             </a>
           </Link>
         </FlexDiv>
-
-        <FlexDiv>
-          <Navigation />
-        </FlexDiv>
-
         {user ? (
           <>
+
+            <FlexDiv>
+              <Navigation />
+            </FlexDiv>
             <FlexDiv>
               <p
                 css={css`
