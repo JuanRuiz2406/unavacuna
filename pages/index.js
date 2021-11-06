@@ -157,7 +157,7 @@ const Home = () => {
   return (
     <Layout>
 
-      <DIV data-loader="lazy">
+      <DIV>
         <h3>Grafio #1 Cantidad de pacientes por vacuna</h3>
         <Bar data={data} options={options} />
         <br />
