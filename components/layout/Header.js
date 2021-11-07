@@ -61,13 +61,6 @@ export const Header = () => {
             <Link href="/signin" passHref={true}>
               <Button bgColor="true">Acceder </Button>
             </Link>
-            <Button
-              href="https://www.escinf.una.ac.cr/index.php/quienes-somos/contactenos"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Contacto
-            </Button>
           </FlexDiv>
         )}
       </ContainerHeader>
