@@ -19,7 +19,6 @@ const Show = () => {
   const [notExists, setNotExists] = useState(false);
   const { firestore } = useContext(FirebaseContext);
   const [consultBD, setConsultBD] = useState(true);
-  const [redirect, setRedirect] = useState(false);
   const [isLoaded, setIsLoaded] = useState(true);
 
   const {
@@ -68,10 +67,6 @@ const Show = () => {
       setIsLoaded(false);
     };
   }, [idCard, consultBD]);
-
-  useEffect(() => {
-    if (redirect) return router.push("/vaccinates");
-  }, [redirect]);
 
   if (!isMounted) {
     <ErrorPage msg={"Problemas al encontrar la pagina"} />;
