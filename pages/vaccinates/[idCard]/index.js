@@ -17,6 +17,7 @@ const initialState = {
   vaccineName: "",
   dose: "",
   vaccinationPlace: "",
+  detail: "",
 };
 const Vaccinate = () => {
   const { user } = useContext(FirebaseContext);
@@ -60,7 +61,7 @@ const Vaccinate = () => {
           vaccineName,
           dose,
           vaccinationPlace,
-          detail,
+          detail: detail==="" ? "N/A": detail,
           vaccinationDate: Date.now(),
           createdBy: user.email,
         };
