@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Bar, PolarArea, Pie } from 'react-chartjs-2';
+import { Bar, PolarArea, Pie } from "react-chartjs-2";
 import styled from "@emotion/styled";
 
 import { Layout } from "./../components/layout/Layout";
-import FirebaseContext from './../firebase/FirebaseContext';
+import FirebaseContext from "./../firebase/FirebaseContext";
 
 const options = {
-  indexAxis: 'y',
+  indexAxis: "y",
 
   elements: {
     bar: {
@@ -16,7 +16,7 @@ const options = {
   responsive: true,
   plugins: {
     legend: {
-      display: false
+      display: false,
     },
     title: {
       display: false,
@@ -31,7 +31,6 @@ const options2 = {
     },
   },
   elements: {
-
     bar: {
       borderWidth: 2,
     },
@@ -41,7 +40,7 @@ const options2 = {
   },
 };
 
-const doses = ['Dosis 1', 'Dosis 2', 'Dosis 3', 'Refuerzo'];
+const doses = ["Dosis 1", "Dosis 2", "Dosis 3", "Refuerzo"];
 
 const Home = () => {
   const [vaccines, setVaccines] = useState([]);
@@ -56,9 +55,7 @@ const Home = () => {
   const { firestore } = useContext(FirebaseContext);
 
   const getData = () => {
-    firestore
-      .collection("vaccines")
-      .onSnapshot(callSnapShot);
+    firestore.collection("vaccines").onSnapshot(callSnapShot);
   };
 
   function callSnapShot(snapshot) {
@@ -78,13 +75,18 @@ const Home = () => {
   }
 
   function getColor() {
-    return "hsl(" + 360 * Math.random() + ',' +
-      (25 + 70 * Math.random()) + '%,' +
-      75 + '%)'
+    return (
+      "hsl(" +
+      360 * Math.random() +
+      "," +
+      (25 + 70 * Math.random()) +
+      "%," +
+      75 +
+      "%)"
+    );
   }
   const getCountByVaccine = (dataVaccines) => {
-
-    dataVaccines.forEach(element => {
+    dataVaccines.forEach((element) => {
       firestore
         .collection("vaccinates")
         .where("vaccineName", "==", element)
@@ -96,7 +98,7 @@ const Home = () => {
         });
     });
 
-    doses.forEach(element => {
+    doses.forEach((element) => {
       firestore
         .collection("vaccinates")
         .where("dose", "==", element)
@@ -105,7 +107,7 @@ const Home = () => {
           setDataChart2((e) => [...e, querySnapshot.docs.length]);
         });
     });
-  }
+  };
 
   useEffect(() => {
     getData();
@@ -131,10 +133,10 @@ const Home = () => {
       {
         data: dataChart2,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)',
+          "rgba(255, 99, 132, 0.5)",
+          "rgba(54, 162, 235, 0.5)",
+          "rgba(255, 206, 86, 0.5)",
+          "rgba(75, 192, 192, 0.5)",
         ],
         borderWidth: 1,
       },
@@ -145,10 +147,10 @@ const Home = () => {
     labels: vaccines,
     datasets: [
       {
-        label: '# of Votes',
+        label: "# of Votes",
         data: dataChart3,
         backgroundColor: vaccineColor2,
-        borderColor: ['white'],
+        borderColor: ["white"],
         borderWidth: 2,
       },
     ],
@@ -156,22 +158,20 @@ const Home = () => {
 
   return (
     <Layout>
-
       <DIV>
-        <h3>Grafio #1 Cantidad de pacientes por vacuna</h3>
+        <h3>Grafico #1 Cantidad de pacientes por vacuna</h3>
         <Bar data={data} options={options} />
         <br />
         <hr />
         <br />
-        <h3>Grafio #2 Cantidad de pacientes por dosis</h3>
+        <h3>Grafico #2 Cantidad de pacientes por dosis</h3>
         <PolarArea data={data2} options={options2} />
         <br />
         <hr />
         <br />
-        <h3>Grafio #3 Cantidad de vacunas disponibles</h3>
+        <h3>Grafico #3 Cantidad de vacunas disponibles</h3>
         <Pie data={data3} />
       </DIV>
-
     </Layout>
   );
 };

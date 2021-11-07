@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Layout } from "../../components/layout/Layout";
-import { Form, Field, InputSubmit, Error } from "../../shared/Form";
+import { Layout } from "../../../components/layout/Layout";
+import { Form, Field, InputSubmit, Error } from "../../../shared/Form";
 import { useRouter } from "next/router";
-import { UseForm } from "./../../hooks/UseForm";
+import { UseForm } from "../../../hooks/UseForm";
 
-import WithAuth from "../../components/unavacuna/WithAuth";
-import ErrorPage from "./../404";
-import vaccinate from "../../validations/Vaccinate";
-import UseIsMounted from "../../hooks/UseIsMounted";
-import FirebaseContext from "../../firebase/FirebaseContext";
+import WithAuth from "../../../components/unavacuna/WithAuth";
+import ErrorPage from "../../404";
+import vaccinate from "../../../validations/Vaccinate";
+import UseIsMounted from "../../../hooks/UseIsMounted";
+import FirebaseContext from "../../../firebase/FirebaseContext";
 
 const initialState = {
   namePatient: "",
@@ -17,6 +17,8 @@ const initialState = {
   vaccinationPlace: "",
 };
 const Vaccinate = () => {
+  const { user } = useContext(FirebaseContext);
+
   const isMounted = UseIsMounted();
   const router = useRouter();
 
@@ -56,6 +58,7 @@ const Vaccinate = () => {
           dose,
           vaccinationPlace,
           vaccinationDate: Date.now(),
+          createdBy: user.email,
         };
         firestore.collection("vaccinates").add(vaccinate);
         setRedirect(true);
@@ -120,7 +123,7 @@ const Vaccinate = () => {
   if (!Object.keys(patient).length && !notExists) return "Cargando...";
 
   return notExists ? (
-    <ErrorPage msg={"No existe la vacuna"} />
+    <ErrorPage msg={"No existe el paciente"} />
   ) : (
     <Layout>
       <Form onSubmit={handleRegister}>

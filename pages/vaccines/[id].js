@@ -9,6 +9,8 @@ import UseIsMounted from "../../hooks/UseIsMounted";
 import FirebaseContext from "../../firebase/FirebaseContext";
 
 const EditVaccine = () => {
+  const { user } = useContext(FirebaseContext);
+
   const isMounted = UseIsMounted();
   const router = useRouter();
 
@@ -36,6 +38,7 @@ const EditVaccine = () => {
         quantity: newQuantity,
         description,
         updatedAt: Date.now(),
+        updatedBy: user.email,
       };
       firestore.collection("vaccines").doc(name).update(vaccineObj);
       setRedirect(true);

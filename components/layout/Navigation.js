@@ -11,6 +11,8 @@ export const Navigation = () => {
         <Link href="/patients">Pacientes</Link>
 
         <Link href="/vaccinates">Vacunados</Link>
+
+        <Link href="/">Estadísticas</Link>
       </Nav>
     </FlexDiv>
   );

@@ -18,6 +18,8 @@ const initialState = {
   address: "",
 };
 const register = () => {
+  const { user } = useContext(FirebaseContext);
+
   const [registerError, setRegisterError] = useState(null);
   const [redirect, setRedirect] = useState(false);
 
@@ -25,6 +27,7 @@ const register = () => {
     UseValidation(initialState, patient, register);
 
   const { firestore } = useContext(FirebaseContext);
+
   const { idCard, name, lastName, birthDate, address } = values;
   const router = useRouter();
 
@@ -41,6 +44,7 @@ const register = () => {
           age: GetAge(birthDate),
           address,
           createdAt: Date.now(),
+          createdBy: user.email,
         };
 
         firestore

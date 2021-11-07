@@ -19,6 +19,7 @@ export const Form = styled.form`
     margin: 2rem 0;
     border: 1px solid #e1e1e1;
     padding: 2rem;
+    border-radius: 1rem;
   }
 `;
 
