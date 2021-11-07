@@ -15,6 +15,8 @@ const initialState = {
   quantity: "",
 };
 const register = () => {
+  const { user } = useContext(FirebaseContext);
+
   const [registerError, setRegisterError] = useState(null);
 
   const { values, errors, handleChange, handleSubmit, handleBlur } =
@@ -33,6 +35,7 @@ const register = () => {
         quantity: newQuantity,
         description,
         createdAt: Date.now(),
+        createdBy: user.email,
       };
 
       firestore

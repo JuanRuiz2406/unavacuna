@@ -11,12 +11,16 @@ import {
 } from "../../helpers/TableInit";
 import { css } from "@emotion/react";
 
-import Edit from "@material-ui/icons/Edit";
+import Visibility from "@material-ui/icons/Visibility";
+import Add from "@material-ui/icons/Add";
 import UseIsMounted from "../../hooks/UseIsMounted";
 import { PrepareDateFormat } from "../../helpers/PrepareDateFormat";
+import { useRouter } from "next/router";
 
 const Vaccinates = () => {
   const isMounted = UseIsMounted();
+
+  const router = useRouter();
 
   const [vaccinates, setVaccinates] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
@@ -109,9 +113,16 @@ const Vaccinates = () => {
           data={vaccinates}
           actions={[
             {
-              icon: Edit,
-              tooltip: "Editar",
-              onClick: (event, rowData) => alert("Editar"),
+              icon: Visibility,
+              tooltip: "Ver Datos",
+              onClick: (event, rowData) =>
+                router.push(`vaccinates/${rowData.idCardPatient}/show`),
+            },
+            {
+              icon: Add,
+              tooltip: "Añadir Vacuna",
+              onClick: (event, rowData) =>
+                router.push(`vaccinates/${rowData.idCardPatient}`),
             },
           ]}
           options={TableOptions}

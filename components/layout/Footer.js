@@ -58,7 +58,7 @@ export const Footer = () => {
           padding: 0.5rem;
         `}
       >
-        UNAVacuna V 2.1.1 @ 2021
+        UNAVacuna V 4.0.0 @ 2021
       </div>
     </ContFooter>
   );

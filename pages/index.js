@@ -158,17 +158,17 @@ const Home = () => {
     <Layout>
 
       <DIV data-loader="lazy">
-        <h3>Grafio #1 Cantidad de pacientes por vacuna</h3>
+        <h3>Grafico #1 Cantidad de pacientes por vacuna</h3>
         <Bar data={data} options={options} />
         <br />
         <hr />
         <br />
-        <h3>Grafio #2 Cantidad de pacientes por dosis</h3>
+        <h3>Grafico #2 Cantidad de pacientes por dosis</h3>
         <PolarArea data={data2} options={options2} />
         <br />
         <hr />
         <br />
-        <h3>Grafio #3 Cantidad de vacunas disponibles</h3>
+        <h3>Grafico #3 Cantidad de vacunas disponibles</h3>
         <Pie data={data3} />
       </DIV>
 
