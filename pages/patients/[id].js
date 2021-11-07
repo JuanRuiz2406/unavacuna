@@ -7,6 +7,7 @@ import WithAuth from "../../components/unavacuna/WithAuth";
 import ErrorPage from "../404";
 import UseIsMounted from "../../hooks/UseIsMounted";
 import FirebaseContext from "../../firebase/FirebaseContext";
+import { GetAge } from "../../helpers/GetAge";
 
 const EditPatient = () => {
   const { user } = useContext(FirebaseContext);
@@ -26,7 +27,7 @@ const EditPatient = () => {
 
   const { firestore } = useContext(FirebaseContext);
 
-  const { idCard, name, lastName, birthDate, address } = formValues;
+  const { name, lastName, birthDate, address } = formValues;
 
   async function handleEdit(e) {
     if (GetAge(birthDate) < 8) {
@@ -34,8 +35,7 @@ const EditPatient = () => {
     } else {
       e.preventDefault();
       try {
-        const patientObj = {
-          idCard,
+        const patient = {
           name,
           lastName,
           birthDate,
@@ -44,7 +44,7 @@ const EditPatient = () => {
           updateAt: Date.now(),
           updateBy: user.email,
         };
-        firestore.collection("patients").doc(idCard).update(patientObj);
+        firestore.collection("patients").doc(id).update(patient);
         setRedirect(true);
       } catch (error) {
         setRegisterError(error.message);
@@ -67,7 +67,7 @@ const EditPatient = () => {
   const handleInputChange = ({ target }) => {
     setFormValues({
       ...formValues,
-      [target.idCard]: target.value,
+      [target.name]: target.value,
     });
   };
 
@@ -100,10 +100,10 @@ const EditPatient = () => {
               type="number"
               name="idCard"
               placeholder="Cédula"
-              value={idCard}
+              value={id}
               onChange={handleInputChange}
-              required
-            />
+              readOnly
+              />
           </Field>
 
           <Field>
