@@ -14,8 +14,12 @@ import {
 import { css } from "@emotion/react";
 
 import Edit from "@material-ui/icons/Edit";
+import Add from "@material-ui/icons/Add";
+
 import UseIsMounted from "../../hooks/UseIsMounted";
 import { PrepareDateFormat } from '../../helpers/PrepareDateFormat';
+
+import { useRouter } from "next/router";
 
 const Patients = () => {
   const isMounted = UseIsMounted();
@@ -24,6 +28,7 @@ const Patients = () => {
   const [isLoaded, setIsLoaded] = useState(true);
 
   const { firestore } = useContext(FirebaseContext);
+  const router = useRouter();
 
   const getData = () => {
     firestore
@@ -108,7 +113,16 @@ const Patients = () => {
             {
               icon: Edit,
               tooltip: "Editar",
-              onClick: (event, rowData) => alert("Editar"),
+              onClick: (event, rowData) => {
+                return router.push(`/patients/${rowData.idCard}`);
+              },
+            },
+            {
+              icon: Add,
+              tooltip: "Vacunar",
+              onClick: (event, rowData) => {
+                return router.push(`/vaccinates/${rowData.idCard}`);
+              },
             },
           ]}
           options={TableOptions}
