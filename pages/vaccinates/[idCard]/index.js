@@ -10,6 +10,8 @@ import vaccinate from "../../../validations/Vaccinate";
 import UseIsMounted from "../../../hooks/UseIsMounted";
 import FirebaseContext from "../../../firebase/FirebaseContext";
 
+const doses = ["Dosis 1", "Dosis 2", "Dosis 3", "Refuerzo"];
+
 const initialState = {
   namePatient: "",
   vaccineName: "",
@@ -28,6 +30,7 @@ const Vaccinate = () => {
 
   const [registerError, setRegisterError] = useState(null);
   const [notExists, setNotExists] = useState(false);
+  const [vaccinates, setVaccinates] = useState([]);
   const [consultBD, setConsultBD] = useState(true);
   const [redirect, setRedirect] = useState(false);
   const [isLoaded, setIsLoaded] = useState(true);
@@ -93,7 +96,6 @@ const Vaccinate = () => {
       };
     });
 
-    console.log(vaccinesData);
     setVaccines(vaccinesData);
   }
 
@@ -111,8 +113,26 @@ const Vaccinate = () => {
     }
   };
 
+  const getData = () => {
+    firestore
+      .collection("vaccinates")
+      .orderBy("vaccinationDate", "desc")
+      .onSnapshot(callSnapShot1);
+  };
+
+  function callSnapShot1(snapshot) {
+    const data = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+    if (isLoaded) setVaccinates(data);
+  }
+
   useEffect(() => {
     if (idCard && consultBD) {
+      getData();
       getPatient();
     }
 
@@ -188,11 +208,17 @@ const Vaccinate = () => {
             value={dose}
             onChange={handleInputChange}
           >
-            <option value="">Seleccione ▼</option>;
-            <option value="Dosis 1">Dosis 1</option>;
-            <option value="Dosis 2">Dosis 2</option>;
-            <option value="Dosis 3">Dosis 3</option>;
-            <option value="Refuerzo">Refuerzo</option>;
+
+            {doses.map((item) => (
+              <option
+                key={item}
+                value={item}
+                disabled={vaccinates.find(x => x.dose === dose && x.idCardPatient === patient.idCard)}
+              >
+                {item}
+              </option>
+            ))}
+
           </select>
         </Field>
         {errors.dose && <Error>{errors.dose}</Error>}
@@ -214,7 +240,7 @@ const Vaccinate = () => {
 
         <InputSubmit type="submit" value="Registrar" />
       </Form>
-    </Layout>
+    </Layout >
   );
 };
 
