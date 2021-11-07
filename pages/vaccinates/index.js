@@ -98,6 +98,12 @@ const Vaccinates = () => {
             },
 
             {
+              title: "Detalle",
+              field: "detail",
+              editable: "never",
+            },
+
+            {
               title: "Fecha",
               field: "vaccinationDate",
               editable: "never",
