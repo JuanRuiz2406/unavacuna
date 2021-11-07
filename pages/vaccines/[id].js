@@ -3,9 +3,9 @@ import { Layout } from "../../components/layout/Layout";
 import { Form, Field, InputSubmit, Error } from "../../shared/Form";
 import { useRouter } from "next/router";
 
-import WithAuth from "../../components/unavacuna/WithAuth";
 import ErrorPage from "./../404";
 import UseIsMounted from "../../hooks/UseIsMounted";
+import WithAuth from "../../components/unavacuna/WithAuth";
 import FirebaseContext from "../../firebase/FirebaseContext";
 
 const EditVaccine = () => {
@@ -26,7 +26,7 @@ const EditVaccine = () => {
 
   const { firestore } = useContext(FirebaseContext);
 
-  const { name, description, quantity } = formValues;
+  const { description, quantity } = formValues;
 
   async function handleEdit(e) {
     e.preventDefault();
@@ -34,13 +34,12 @@ const EditVaccine = () => {
       const newQuantity = Number(quantity);
 
       const vaccineObj = {
-        name,
         quantity: newQuantity,
         description,
         updatedAt: Date.now(),
         updatedBy: user.email,
       };
-      firestore.collection("vaccines").doc(name).update(vaccineObj);
+      firestore.collection("vaccines").doc(id).update(vaccineObj);
       setRedirect(true);
     } catch (error) {
       setRegisterError(error.message);
@@ -94,11 +93,9 @@ const EditVaccine = () => {
             <label htmlFor="name">Nombre</label>
             <input
               type="text"
-              name="name"
-              placeholder="Nombre de vacuna"
-              value={name}
-              onChange={handleInputChange}
-              required
+              value={id}
+              readOnly
+              disabled
             />
           </Field>
 
