@@ -60,7 +60,13 @@ const Vaccinate = () => {
           vaccinationDate: Date.now(),
           createdBy: user.email,
         };
+
+        const vaccine = vaccines.find(x => x.name === vaccineName);
+        vaccine.quantity = vaccine.quantity - 1;
+
         firestore.collection("vaccinates").add(vaccinate);
+        firestore.collection("vaccines").doc(vaccine.name).update(vaccine);
+
         setRedirect(true);
       } catch (error) {
         setRegisterError(error.message);
@@ -74,18 +80,21 @@ const Vaccinate = () => {
   const getDataVaccines = () => {
     firestore
       .collection("vaccines")
-      .orderBy("createdAt", "desc")
+      .orderBy("quantity")
+      .startAfter(0)
       .onSnapshot(callSnapShot);
   };
 
   function callSnapShot(snapshot) {
-    const vacine = snapshot.docs.map((doc) => {
+    const vaccinesData = snapshot.docs.map((doc) => {
       return {
         id: doc.id,
         ...doc.data(),
       };
     });
-    setVaccines(vacine);
+
+    console.log(vaccinesData);
+    setVaccines(vaccinesData);
   }
 
   const getPatient = async () => {
