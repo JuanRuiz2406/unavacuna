@@ -17,6 +17,7 @@ const initialState = {
   vaccineName: "",
   dose: "",
   vaccinationPlace: "",
+  detail: "",
 };
 const Vaccinate = () => {
   const { user } = useContext(FirebaseContext);
@@ -42,7 +43,7 @@ const Vaccinate = () => {
 
   const { firestore } = useContext(FirebaseContext);
 
-  const { vaccineName, dose, vaccinationPlace } = formValues;
+  const { vaccineName, dose, vaccinationPlace, detail } = formValues;
 
   const handleBlur = () => {
     const validationErrors = vaccinate(formValues);
@@ -60,6 +61,7 @@ const Vaccinate = () => {
           vaccineName,
           dose,
           vaccinationPlace,
+          detail: detail==="" ? "N/A": detail,
           vaccinationDate: Date.now(),
           createdBy: user.email,
         };
@@ -208,12 +210,12 @@ const Vaccinate = () => {
             value={dose}
             onChange={handleInputChange}
           >
-
+            <option value="">Seleccione ▼</option>;
             {doses.map((item) => (
               <option
                 key={item}
                 value={item}
-                disabled={vaccinates.find(x => x.dose === dose && x.idCardPatient === patient.idCard)}
+                disabled={vaccinates.find(x => x.dose === item && x.idCardPatient === patient.idCard)}
               >
                 {item}
               </option>
@@ -235,6 +237,17 @@ const Vaccinate = () => {
           />
         </Field>
         {errors.vaccinationPlace && <Error>{errors.vaccinationPlace}</Error>}
+
+        <Field>
+          <label htmlFor="namePatient">Detalle</label>
+          <input
+            type="text"
+            name="detail"
+            placeholder="Detalle"
+            value={detail}
+            onChange={handleInputChange}
+          />
+        </Field>
 
         {registerError && <Error>{registerError}</Error>}
 
