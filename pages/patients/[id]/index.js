@@ -103,6 +103,7 @@ const EditPatient = () => {
               value={id}
               onChange={handleInputChange}
               readOnly
+              disabled
               />
           </Field>
 
