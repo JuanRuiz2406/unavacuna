@@ -13,11 +13,12 @@ import {
 } from "../../helpers/TableInit";
 import { css } from "@emotion/react";
 
-import Edit from "@material-ui/icons/Edit";
+import Visibility from "@material-ui/icons/Visibility";
 import Add from "@material-ui/icons/Add";
+import Edit from "@material-ui/icons/Edit";
 
 import UseIsMounted from "../../hooks/UseIsMounted";
-import { PrepareDateFormat } from '../../helpers/PrepareDateFormat';
+import { PrepareDateFormat } from "../../helpers/PrepareDateFormat";
 
 import { useRouter } from "next/router";
 
@@ -110,6 +111,12 @@ const Patients = () => {
           ]}
           data={patients}
           actions={[
+            {
+              icon: Visibility,
+              tooltip: "Ver Datos",
+              onClick: (event, rowData) =>
+                router.push(`patients/${rowData.id}/show`),
+            },
             {
               icon: Edit,
               tooltip: "Editar",

@@ -13,6 +13,7 @@ import {
 } from "../../helpers/TableInit";
 import { css } from "@emotion/react";
 
+import Visibility from "@material-ui/icons/Visibility";
 import Edit from "@material-ui/icons/Edit";
 import UseIsMounted from "../../hooks/UseIsMounted";
 import { PrepareDateFormat } from "../../helpers/PrepareDateFormat";
@@ -91,13 +92,19 @@ const Vaccines = () => {
             },
             { title: "Cantidad", field: "quantity", editable: "never" },
             {
-              title: "Fecha",
+              title: "Registrado",
               field: "createdAt",
               editable: "never",
             },
           ]}
           data={vaccines}
           actions={[
+            {
+              icon: Visibility,
+              tooltip: "Ver Datos",
+              onClick: (event, rowData) =>
+                router.push(`vaccines/${rowData.id}/show`),
+            },
             {
               icon: Edit,
               tooltip: "Editar",

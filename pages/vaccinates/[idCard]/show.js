@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Layout } from "../../../components/layout/Layout";
-import { Form, Field, InputSubmit, Error } from "../../../shared/Form";
+import { Form, Field, InputSubmit } from "../../../shared/Form";
 import { useRouter } from "next/router";
 
 import WithAuth from "../../../components/unavacuna/WithAuth";
@@ -14,7 +14,7 @@ const Show = () => {
   const isMounted = UseIsMounted();
   const router = useRouter();
 
-  const [vaccinate, setVaccinate] = useState([]);
+  const [vaccinate, setVaccinate] = useState({});
   const [vaccinates, setVaccinates] = useState([]);
   const [notExists, setNotExists] = useState(false);
   const { firestore } = useContext(FirebaseContext);

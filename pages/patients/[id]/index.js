@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Layout } from "../../components/layout/Layout";
-import { Form, Field, InputSubmit, Error } from "../../shared/Form";
+import { Layout } from "../../../components/layout/Layout";
+import { Form, Field, InputSubmit, Error } from "../../../shared/Form";
 import { useRouter } from "next/router";
 
-import WithAuth from "../../components/unavacuna/WithAuth";
-import ErrorPage from "../404";
-import UseIsMounted from "../../hooks/UseIsMounted";
-import FirebaseContext from "../../firebase/FirebaseContext";
-import { GetAge } from "../../helpers/GetAge";
+import WithAuth from "../../../components/unavacuna/WithAuth";
+import ErrorPage from "../../404";
+import UseIsMounted from "../../../hooks/UseIsMounted";
+import FirebaseContext from "../../../firebase/FirebaseContext";
+import { GetAge } from "../../../helpers/GetAge";
 
 const EditPatient = () => {
   const { user } = useContext(FirebaseContext);
