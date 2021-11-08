@@ -115,12 +115,12 @@ const EditVaccine = () => {
           <legend>Acerca de la vacuna</legend>
 
           <Field>
-            <label htmlFor="description">Descripcíon</label>
+            <label htmlFor="description">Descripción</label>
             <textarea
               type="text"
               raws="5"
               name="description"
-              placeholder="Descripcíon de la vacuna"
+              placeholder="Descripción de la vacuna"
               value={description}
               onChange={handleInputChange}
               required

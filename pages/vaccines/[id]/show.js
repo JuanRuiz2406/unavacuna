@@ -79,7 +79,7 @@ const Show = () => {
           <legend>Acerca de la vacuna</legend>
 
           <Field>
-            <label htmlFor="description">Descripcíon</label>
+            <label htmlFor="description">Descripción</label>
             <textarea
               type="text"
               raws="5"
