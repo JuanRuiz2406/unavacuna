@@ -7,9 +7,6 @@ import { Navigation } from "./Navigation";
 import { Button } from "./../../shared/Button";
 import FirebaseContext from "./../../firebase/FirebaseContext";
 
-import Image from "next/image";
-import logo from "../../public/images/logo.png";
-
 export const Header = () => {
   const { user, logout } = useContext(FirebaseContext);
 
@@ -24,7 +21,7 @@ export const Header = () => {
         <FlexDiv>
           <Link href="/" passHref={true}>
             <a>
-              <Image src={logo} width={150} height={90} />
+              <img src="https://i.imgur.com/4Trs1oh.png" width={150} height={90} />
             </a>
           </Link>
         </FlexDiv>
