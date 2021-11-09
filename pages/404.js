@@ -2,7 +2,7 @@ import errorImage from "../public/images/img1.svg";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-const ErrorPage = ({ msg }) => {
+const ErrorPage = ({ msg = null }) => {
   return (
     <Container>
       <div
