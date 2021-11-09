@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Button = styled.a`
+  border-radius: 1rem;
   font-weight: 700;
   text-transform: uppercase;
   border: 1px solid #d1d1d1;

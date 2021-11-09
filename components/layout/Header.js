@@ -51,7 +51,7 @@ export const Header = () => {
               </Button>
               <Link href="/signin" passHref={true}>
                 <Button bgColor="true">
-                  <i className="fas fa-users-cog"></i>
+                  <i className="fas fa-user-plus"></i>
                 </Button>
               </Link>
             </FlexDiv>
