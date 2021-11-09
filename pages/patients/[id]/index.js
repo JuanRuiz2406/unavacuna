@@ -16,7 +16,7 @@ const EditPatient = () => {
   const router = useRouter();
 
   const {
-    query: { id },
+    query: { id = "" },
   } = router;
 
   const [formValues, setFormValues] = useState({});
@@ -104,7 +104,7 @@ const EditPatient = () => {
               onChange={handleInputChange}
               readOnly
               disabled
-              />
+            />
           </Field>
 
           <Field>
