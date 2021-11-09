@@ -15,7 +15,7 @@ const EditVaccine = () => {
   const router = useRouter();
 
   const {
-    query: { id = "" },
+    query: { id },
   } = router;
 
   const [formValues, setFormValues] = useState({});

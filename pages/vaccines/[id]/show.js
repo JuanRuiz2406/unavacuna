@@ -19,7 +19,7 @@ const Show = () => {
   const [isLoaded, setIsLoaded] = useState(true);
 
   const {
-    query: { id = "" },
+    query: { id },
   } = router;
 
   const getVaccine = async () => {
