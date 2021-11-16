@@ -60,6 +60,7 @@ const Vaccinates = () => {
         <h1
           css={css`
             text-align: center;
+            color: var(--red);
           `}
         >
           Vacunados

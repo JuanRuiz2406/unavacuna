@@ -1,9 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Textbox } from "react-inputs-validation";
-
-import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { Layout } from "../../components/layout/Layout";
-import { Form, Field, InputSubmit, Error } from "../../shared/Form";
+import { Form, Field, ButtonSubmit, Error } from "../../shared/Form";
 import { useRouter } from "next/router";
 
 import { UseValidation } from "../../hooks/UseValidation";
@@ -145,7 +142,9 @@ const register = () => {
           {errors.address && <Error>{errors.address}</Error>}
 
           {registerError && <Error>{registerError}</Error>}
-          <InputSubmit type="submit" value="Registrar" />
+          <ButtonSubmit type="submit" value="Registrar">
+          <i class="fas fa-save"></i>  Registrar
+          </ButtonSubmit>
         </Form>
       </Layout>
     )

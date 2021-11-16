@@ -64,6 +64,7 @@ const Vaccines = () => {
         <h1
           css={css`
             text-align: center;
+            color: var(--red);
           `}
         >
           Vacunas
@@ -75,7 +76,7 @@ const Vaccines = () => {
             `}
             bgColor="true"
           >
-            Agregar
+            <i class="fas fa-plus-circle"></i> Agregar
           </Button>
         </Link>
 

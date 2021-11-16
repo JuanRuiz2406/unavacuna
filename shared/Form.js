@@ -50,7 +50,7 @@ export const Field = styled.div`
   }
 `;
 
-export const InputSubmit = styled.input`
+export const ButtonSubmit = styled.button`
   background-color: var(--red);
   width: 100%;
   padding: 1.5rem;

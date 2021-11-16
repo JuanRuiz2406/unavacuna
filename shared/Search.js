@@ -8,7 +8,7 @@ const InputText = styled.input`
   min-width: 300px;
 `;
 
-const InputSubmit = styled.button`
+const ButtonSubmit = styled.button`
   height: 3rem;
   width: 3rem;
   display: block;
@@ -34,7 +34,7 @@ export const Search = () => {
       `}
     >
       <InputText type="text" placeholder="Buscar paciente" />
-      <InputSubmit type="submit"> Buscar </InputSubmit>
+      <ButtonSubmit type="submit"> Buscar </ButtonSubmit>
     </form>
   );
 };

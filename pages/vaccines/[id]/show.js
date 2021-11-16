@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Layout } from "../../../components/layout/Layout";
-import { Form, Field, InputSubmit } from "../../../shared/Form";
+import { Form, Field, ButtonSubmit } from "../../../shared/Form";
 import { useRouter } from "next/router";
 
 import ErrorPage from "../../404";
@@ -91,13 +91,13 @@ const Show = () => {
           </Field>
         </fieldset>
 
-        <InputSubmit
+        <ButtonSubmit
           type="button"
           onClick={() => {
             return router.push("/vaccines");
-          }}
-          value="Regresar"
-        />
+          }}>
+          <i class="fas fa-arrow-alt-circle-left"></i>  Regresar
+        </ButtonSubmit>
       </Form>
     </Layout>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Layout } from "../../../components/layout/Layout";
-import { Form, Field, InputSubmit, Error } from "../../../shared/Form";
+import { Form, Field, ButtonSubmit, Error } from "../../../shared/Form";
 import { useRouter } from "next/router";
 import { UseForm } from "../../../hooks/UseForm";
 
@@ -251,7 +251,10 @@ const Vaccinate = () => {
 
         {registerError && <Error>{registerError}</Error>}
 
-        <InputSubmit type="submit" value="Registrar" />
+        <ButtonSubmit type="submit" value="Registrar">
+        <i class="fas fa-save"></i> Registrar
+        </ButtonSubmit>
+
       </Form>
     </Layout >
   );

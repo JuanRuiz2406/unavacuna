@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import { Layout } from "../../components/layout/Layout";
-import { Form, Field, InputSubmit, Error } from "../../shared/Form";
+import { Form, Field, ButtonSubmit, Error } from "../../shared/Form";
 import { useRouter } from "next/router";
 
 import { UseValidation } from "../../hooks/UseValidation";
@@ -103,7 +103,9 @@ const register = () => {
             {errors.description && <Error>{errors.description}</Error>}
           </fieldset>
           {registerError && <Error>{registerError}</Error>}
-          <InputSubmit type="submit" value="Guardar" />
+          <ButtonSubmit type="submit" value="Guardar">
+          <i class="fas fa-save"></i>   Guardar
+          </ButtonSubmit>
         </Form>
       </>
     </Layout>
