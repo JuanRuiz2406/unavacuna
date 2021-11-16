@@ -134,6 +134,9 @@ const Patients = () => {
             },
           ]}
           options={TableOptions}
+          onRowClick={(event, rowData) =>
+            router.push(`patients/${rowData.id}/show`)
+          }
         />
       </Layout>
     )

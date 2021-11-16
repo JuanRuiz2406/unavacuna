@@ -7,6 +7,16 @@ export const Navigation = () => {
   return (
     <Nav>
       <FlexDiv>
+        <Link href="/vaccinates">Vacunados</Link>
+        <i
+          css={css`
+            color: var(--gray);
+            margin-left: 0.2rem;
+          `}
+          className="fas fa-head-side-mask"
+        ></i>
+      </FlexDiv>
+      <FlexDiv>
         <Link href="/vaccines">Vacunas</Link>
         <i
           css={css`
