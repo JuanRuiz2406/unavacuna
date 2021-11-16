@@ -11,7 +11,7 @@ import patient from "../../validations/Patient";
 import { GetAge } from "../../helpers/GetAge";
 
 const initialState = {
-  idCard: 0,
+  idCard: undefined,
   name: "",
   lastName: "",
   birthDate: "",

@@ -44,6 +44,10 @@ export const Field = styled.div`
     height: 250px;
     resize: none;
   }
+
+  @media (max-width: 576px) {
+    display: grid;
+  }
 `;
 
 export const InputSubmit = styled.input`

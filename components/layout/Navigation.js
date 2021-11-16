@@ -1,20 +1,44 @@
 import React from "react";
 import Link from "next/link";
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 
 export const Navigation = () => {
   return (
-    <FlexDiv>
-      <Nav>
+    <Nav>
+      <FlexDiv>
         <Link href="/vaccines">Vacunas</Link>
+        <i
+          css={css`
+            color: var(--gray);
+            margin-left: 0.2rem;
+          `}
+          className="fas fa-syringe"
+        ></i>
+      </FlexDiv>
 
+      <FlexDiv>
         <Link href="/patients">Pacientes</Link>
+        <i
+          css={css`
+            color: var(--gray);
+            margin-left: 0.2rem;
+          `}
+          className="fas fa-users"
+        ></i>
+      </FlexDiv>
 
-        <Link href="/vaccinates">Vacunados</Link>
-
+      <FlexDiv>
         <Link href="/">Estadísticas</Link>
-      </Nav>
-    </FlexDiv>
+        <i
+          css={css`
+            color: var(--gray);
+            margin-left: 0.2rem;
+          `}
+          className="fas fa-chart-pie"
+        ></i>
+      </FlexDiv>
+    </Nav>
   );
 };
 

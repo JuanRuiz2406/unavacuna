@@ -21,13 +21,16 @@ export const Header = () => {
         <FlexDiv>
           <Link href="/" passHref={true}>
             <a>
-              <img src="https://i.imgur.com/4Trs1oh.png" width={150} height={90} />
+              <img
+                src="https://i.imgur.com/4Trs1oh.png"
+                width={150}
+                height={90}
+              />
             </a>
           </Link>
         </FlexDiv>
         {user ? (
           <>
-
             <FlexDiv>
               <Navigation />
             </FlexDiv>
@@ -44,7 +47,7 @@ export const Header = () => {
 
             <FlexDiv>
               <Button bgColor="true" onClick={() => logout()}>
-                Cerrar Sesión
+                <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
               </Button>
               <Link href="/signin" passHref={true}>
                 <Button bgColor="true">

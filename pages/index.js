@@ -156,6 +156,14 @@ const Home = () => {
     ],
   };
 
+  if (
+    !Object.keys(vaccines).length &&
+    !Object.keys(dataChart).length &&
+    !Object.keys(dataChart2).length &&
+    !Object.keys(dataChart3).length
+  )
+    return "Cargando Graficos...";
+
   return (
     <Layout>
       <DIV>
@@ -186,5 +194,6 @@ const DIV = styled.div`
   color: var(--red);
   @media (max-width: 768px) {
     width: 100%;
+    padding: 0rem 2rem;
   }
 `;

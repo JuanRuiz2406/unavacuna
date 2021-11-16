@@ -66,6 +66,7 @@ const Patients = () => {
         <h1
           css={css`
             text-align: center;
+            color: var(--red);
           `}
         >
           Pacientes
@@ -77,7 +78,7 @@ const Patients = () => {
             `}
             bgColor="true"
           >
-            Agregar
+            <i className="fas fa-user-plus"></i> Agregar
           </Button>
         </Link>
 

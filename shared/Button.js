@@ -5,7 +5,7 @@ export const Button = styled.a`
   font-weight: 700;
   text-transform: uppercase;
   border: 1px solid #d1d1d1;
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 1rem;
   margin-right: 1rem;
   margin-left: 1rem;
   background-color: ${(props) => (props.bgColor ? "#a31e32" : "white")};
