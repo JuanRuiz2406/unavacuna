@@ -158,7 +158,7 @@ const Vaccinate = () => {
   ) : (
     <Layout>
       <Form onSubmit={handleRegister}>
-        <h1>Registrar Vacunado</h1>
+        <h1>Aplicar Vacuna</h1>
         <Field>
           <label htmlFor="idCardPatient">Cédula</label>
           <input

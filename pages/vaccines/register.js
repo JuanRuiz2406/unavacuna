@@ -31,7 +31,7 @@ const register = () => {
       const newQuantity = Number(quantity);
 
       const vaccine = {
-        name,
+        name: capitalize(name),
         quantity: newQuantity,
         description,
         createdAt: Date.now(),
