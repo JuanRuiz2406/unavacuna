@@ -9,6 +9,8 @@ import WithAuth from "./../../components/unavacuna/WithAuth";
 import FirebaseContext from "../../firebase/FirebaseContext";
 import vaccine from "../../validations/Vaccine";
 
+import { capitalize } from "@material-ui/core";
+
 const initialState = {
   name: "",
   description: "",
